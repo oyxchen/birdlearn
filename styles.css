@@ -551,6 +551,10 @@ input::placeholder {
   padding: 24px;
 }
 
+.about-panel-content {
+  padding: 24px;
+}
+
 .essay {
   max-width: 76ch;
   color: #34423a;
@@ -575,6 +579,33 @@ input::placeholder {
 
 .about-content p {
   margin: 0 0 16px;
+}
+
+.about-author {
+  display: grid;
+  grid-template-columns: minmax(210px, 280px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  margin: 28px 0 18px;
+}
+
+.about-author h3 {
+  margin-top: 0;
+}
+
+.author-photo-frame {
+  margin: 0;
+}
+
+.author-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 58% 50%;
+  border: 2px solid var(--teal);
+  border-radius: 8px;
+  background: #fff;
 }
 
 .about-quote {
@@ -976,8 +1007,13 @@ input::placeholder {
 
   .toolbar,
   .bird-hero,
+  .about-author,
   .setting-row {
     grid-template-columns: 1fr;
+  }
+
+  .author-photo-frame {
+    max-width: 280px;
   }
 
   .toolbar {
