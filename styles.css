@@ -539,7 +539,7 @@ input::placeholder {
 
 .document-tabs {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
   padding: 14px;
   border-top: 1px solid var(--line);
@@ -555,6 +555,32 @@ input::placeholder {
   max-width: 76ch;
   color: #34423a;
   line-height: 1.8;
+}
+
+.about-content {
+  max-width: 78ch;
+  color: #34423a;
+  line-height: 1.8;
+}
+
+.about-content h3 {
+  margin: 22px 0 8px;
+  color: var(--forest);
+  font-size: calc(1.45rem * var(--text-scale));
+}
+
+.about-content h3:first-child {
+  margin-top: 0;
+}
+
+.about-content p {
+  margin: 0 0 16px;
+}
+
+.about-quote {
+  color: var(--forest);
+  font-weight: 800;
+  text-align: center;
 }
 
 .fact-grid,

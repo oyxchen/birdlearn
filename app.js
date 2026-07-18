@@ -1220,7 +1220,7 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Add the Western Bluebird bird call sound here.",
+    "sound": "Bird call sound provided for Western Bluebird.",
     "quiz": [
       {
         "question": "Which size fact matches the Western Bluebird?",
@@ -1278,7 +1278,7 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Add the Acorn Woodpecker bird call sound here.",
+    "sound": "Bird call sound provided for Acorn Woodpecker.",
     "quiz": [
       {
         "question": "Which feeding behavior matches the Acorn Woodpecker?",
@@ -1790,7 +1790,7 @@ const birdSounds = {
   "coopers-hawk": { file: "coopers-hawk-jonathon-jongsma.ogg", recordist: "Jonathon Jongsma" },
   "green-winged-teal": { file: "green-winged-teal-mikko-heikkinen.mp3", recordist: "Mikko Heikkinen" },
   "snowy-egret": { file: "snowy-egret-paul-marvin.mp3", recordist: "Paul Marvin" },
-  "peregrine-falcon": { file: "peregrine-falcon-sharadapte.wav", recordist: "Sharadapte" },
+  "peregrine-falcon": { file: "peregrine-falcon-sharadapte.wav", recordist: "Sharad Apte" },
   "great-blue-heron": { file: "great-blue-heron-national-park-service.ogg", recordist: "National Park Service" },
   "broad-tailed-hummingbird": { file: "broad-tailed-hummingbird-richard-e.-webster.mp3", recordist: "Richard E. Webster" },
   "white-faced-ibis": { file: "white-faced-ibis-richard-e.-webster.mp3", recordist: "Richard E. Webster" },
@@ -1810,7 +1810,6 @@ const birdSounds = {
   "acorn-woodpecker": { file: "acorn-woodpecker-jonathon-jongsma.ogg", recordist: "Jonathon Jongsma" },
   "yellow-warbler": { file: "yellow-warbler-g-mcgrane.ogg", recordist: "G McGrane" },
   "white-crowned-sparrow": { file: "white-crowned-sparrow-national-park-service.ogg", recordist: "National Park Service" },
-  "american-kestrel": { file: "american-kestrel-jonathon-jongsma.mp3", recordist: "Jonathon Jongsma" },
 };
 
 function birdPhotos(bird) {
