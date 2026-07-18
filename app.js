@@ -23,7 +23,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Bird call sound provided for American Avocet.",
     "quiz": [
       {
         "question": "What does the American Avocet eat?",
@@ -81,7 +80,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Bird call sound provided for Black Phoebe.",
     "quiz": [
       {
         "question": "Where would you most expect to find the Black Phoebe?",
@@ -139,7 +137,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Bird call sound provided for Cooper’s Hawk.",
     "quiz": [
       {
         "question": "Which size fact matches the Cooper’s Hawk?",
@@ -197,7 +194,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Bird call sound provided for Green-Winged Teal.",
     "quiz": [
       {
         "question": "Which feeding behavior matches the Green-Winged Teal?",
@@ -255,7 +251,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Add the Snowy Egret bird call sound here.",
     "quiz": [
       {
         "question": "What does the Snowy Egret eat?",
@@ -313,7 +308,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Bird call sound provided for Peregrine Falcon.",
     "quiz": [
       {
         "question": "Where would you most expect to find the Peregrine Falcon?",
@@ -371,7 +365,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Bird call sound provided for Great Blue Heron.",
     "quiz": [
       {
         "question": "Which size fact matches the Great Blue Heron?",
@@ -429,7 +422,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Add the Broad-Tailed Hummingbird bird call sound here.",
     "quiz": [
       {
         "question": "Which feeding behavior matches the Broad-Tailed Hummingbird?",
@@ -487,7 +479,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Add the White-Faced Ibis bird call sound here.",
     "quiz": [
       {
         "question": "What does the White-Faced Ibis eat?",
@@ -545,7 +536,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Bird call sound provided for Steller’s Jay.",
     "quiz": [
       {
         "question": "Where would you most expect to find the Steller’s Jay?",
@@ -603,7 +593,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Bird call sound provided for California Scrub-Jay.",
     "quiz": [
       {
         "question": "Which size fact matches the California Scrub-Jay?",
@@ -661,7 +650,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Bird call sound provided for American Kestrel.",
     "quiz": [
       {
         "question": "Which feeding behavior matches the American Kestrel?",
@@ -719,7 +707,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Add the Loggerhead Shrike bird call sound here.",
     "quiz": [
       {
         "question": "What does the Loggerhead Shrike eat?",
@@ -777,7 +764,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Bird call sound provided for Western Meadowlark.",
     "quiz": [
       {
         "question": "Where would you most expect to find the Western Meadowlark?",
@@ -835,7 +821,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Bird call sound provided for Great-Horned Owl.",
     "quiz": [
       {
         "question": "Which feeding behavior matches the Great-Horned Owl?",
@@ -893,7 +878,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Add the American White Pelican bird call sound here.",
     "quiz": [
       {
         "question": "What does the American White Pelican eat?",
@@ -951,7 +935,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Bird call sound provided for American Robin.",
     "quiz": [
       {
         "question": "Where would you most expect to find the American Robin?",
@@ -1009,7 +992,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Bird call sound provided for Sandhill Crane.",
     "quiz": [
       {
         "question": "Which size fact matches the Sandhill Crane?",
@@ -1067,7 +1049,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Add the Turkey Vulture bird call sound here.",
     "quiz": [
       {
         "question": "Which feeding behavior matches the Turkey Vulture?",
@@ -1125,7 +1106,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Add the Common Murre bird call sound here.",
     "quiz": [
       {
         "question": "What does the Common Murre eat?",
@@ -1183,7 +1163,6 @@ const birds = [
       "Drawing",
       "Field view"
     ],
-    "sound": "Add the Vermilion Flycatcher bird call sound here.",
     "quiz": [
       {
         "question": "Where would you most expect to find the Vermilion Flycatcher?",
@@ -1807,20 +1786,31 @@ const birdMedia = {
 
 const birdSounds = {
   "american-avocet": { file: "american_avocet-jonathon_jongsma.ogg", recordist: "Jonathon Jongsma" },
-  "american-kestrel": { file: "american-kestrel-jonathon-jongsma.mp3", recordist: "Jonathon Jongsma" },
-  "american-robin": { file: "american-robin-jonathon-jongsma.ogg", recordist: "Jonathon Jongsma" },
   "black-phoebe": { file: "black-phoebe-jonathon-jongsma.mp3", recordist: "Jonathon Jongsma" },
-  "california-scrub-jay": { file: "california-scrub-jay-frank-schulenburg.ogg", recordist: "Frank Schulenburg" },
   "coopers-hawk": { file: "coopers-hawk-jonathon-jongsma.ogg", recordist: "Jonathon Jongsma" },
-  "great-blue-heron": { file: "great-blue-heron-national-park-service.ogg", recordist: "National Park Service" },
-  "great-horned-owl": { file: "great-horned-owl-Michael-and-Katie-LaTour.mp3", recordist: "Michael and Katie LaTour" },
   "green-winged-teal": { file: "green-winged-teal-mikko-heikkinen.mp3", recordist: "Mikko Heikkinen" },
-  "peregrine-falcon": { file: "peregrine-falcon-sharadapte.wav", recordist: "Sharad Apte" },
-  "sandhill-crane": { file: "sandhill-crane-jonathon-jongsma.ogg", recordist: "Jonathon Jongsma" },
+  "snowy-egret": { file: "snowy-egret-paul-marvin.mp3", recordist: "Paul Marvin" },
+  "peregrine-falcon": { file: "peregrine-falcon-sharadapte.wav", recordist: "Sharadapte" },
+  "great-blue-heron": { file: "great-blue-heron-national-park-service.ogg", recordist: "National Park Service" },
+  "broad-tailed-hummingbird": { file: "broad-tailed-hummingbird-richard-e.-webster.mp3", recordist: "Richard E. Webster" },
+  "white-faced-ibis": { file: "white-faced-ibis-richard-e.-webster.mp3", recordist: "Richard E. Webster" },
   "stellers-jay": { file: "stellers-jay-jonathon-jongsma.ogg", recordist: "Jonathon Jongsma" },
+  "california-scrub-jay": { file: "california-scrub-jay-frank-schulenburg.ogg", recordist: "Frank Schulenburg" },
+  "american-kestrel": { file: "american-kestrel-jonathon-jongsma.mp3", recordist: "Jonathon Jongsma" },
+  "loggerhead-shrike": { file: "loggerhead-shrike-manuel-grosselet.mp3", recordist: "Manuel Grosselet" },
   "western-meadowlark": { file: "western-meadowlark-peter-wilton.mp3", recordist: "Peter Wilton" },
-  "white-crowned-sparrow": { file: "white-crowned-sparrow-national-park-service.ogg", recordist: "National Park Service" },
+  "great-horned-owl": { file: "great-horned-owl-Michael-and-Katie-LaTour.mp3", recordist: "Michael and Katie LaTour" },
+  "american-white-pelican": { file: "american-white-pelican-andrew-spencer.mp3", recordist: "Andrew Spencer" },
+  "american-robin": { file: "american-robin-jonathon-jongsma.ogg", recordist: "Jonathon Jongsma" },
+  "sandhill-crane": { file: "sandhill-crane-jonathon-jongsma.ogg", recordist: "Jonathon Jongsma" },
+  "turkey-vulture": { file: "turkey-vulture-cristian-pinto.mp3", recordist: "Cristian Pinto" },
+  "common-murre": { file: "common-murre-lawrence-shove.ogg", recordist: "Lawrence Shove" },
+  "vermilion-flycatcher": { file: "vermilion-flycatcher-peter-boesman.mp3", recordist: "Peter Boesman" },
+  "western-bluebird": { file: "western-bluebird-ryan-winkleman.mp3", recordist: "Ryan Winkleman" },
+  "acorn-woodpecker": { file: "acorn-woodpecker-jonathon-jongsma.ogg", recordist: "Jonathon Jongsma" },
   "yellow-warbler": { file: "yellow-warbler-g-mcgrane.ogg", recordist: "G McGrane" },
+  "white-crowned-sparrow": { file: "white-crowned-sparrow-national-park-service.ogg", recordist: "National Park Service" },
+  "american-kestrel": { file: "american-kestrel-jonathon-jongsma.mp3", recordist: "Jonathon Jongsma" },
 };
 
 function birdPhotos(bird) {
@@ -2070,15 +2060,14 @@ function renderBirdDocument() {
         ).join("") : `<div class="media-card media-empty"><p class="map-note">No field photos have been added for ${bird.name} yet.</p></div>`}
       <div class="media-card">
         <h3>Bird Call</h3>
-        <p class="map-note">${bird.sound}</p>
-        ${sound ? `<audio class="sound-player" id="birdSoundPlayer" controls src="${birdSoundUrl(sound.file)}"></audio>` : ""}
-        ${sound ? `<p class="recording-credit">Recorded by ${sound.recordist}</p>` : ""}
-        <button class="sound-button" type="button" id="playSound">Play Sound</button>
+        ${sound ? `
+          <audio class="sound-player" id="birdSoundPlayer" controls src="${birdSoundUrl(sound.file)}"></audio>
+          <p class="recording-credit">Recorded by ${sound.recordist}</p>
+        ` : `<p class="map-note">No recording available for ${bird.name}.</p>`}
       </div>
     </div>
   `;
 
-  document.getElementById("playSound")?.addEventListener("click", playBirdSound);
   elements.mediaPanel.querySelectorAll(".media-photo-card").forEach((card) => {
     card.addEventListener("click", () => openLightbox(card.dataset.photo, card.dataset.caption));
   });
@@ -2182,36 +2171,7 @@ function renderQuiz(bird) {
   });
 }
 
-function playBirdSound() {
-  const bird = getSelectedBird();
-  const sound = birdSounds[bird.slug];
-  const player = document.getElementById("birdSoundPlayer");
-  if (sound && player) {
-    player.volume = state.volume / 100;
-    player.currentTime = 0;
-    player.play().catch(() => {});
-    return;
-  }
 
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContext) return;
-
-  const context = new AudioContext();
-  const volume = state.volume / 100;
-  [0, 0.16, 0.32].forEach((offset, index) => {
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-    oscillator.type = "sine";
-    oscillator.frequency.value = 720 + index * 130;
-    gain.gain.setValueAtTime(0.0001, context.currentTime + offset);
-    gain.gain.exponentialRampToValueAtTime(Math.max(volume * 0.12, 0.0001), context.currentTime + offset + 0.02);
-    gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + offset + 0.12);
-    oscillator.connect(gain);
-    gain.connect(context.destination);
-    oscillator.start(context.currentTime + offset);
-    oscillator.stop(context.currentTime + offset + 0.14);
-  });
-}
 
 function renderAnalysis() {
   const stats = getStats();
