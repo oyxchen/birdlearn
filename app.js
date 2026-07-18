@@ -1525,8 +1525,8 @@ const birdMedia = {
   ],
   "peregrine-falcon": [
     [
-      "Peregrine_Falcon-adult.webp",
-      "Adult peregrine falcon"
+      "Peregrine_Falcon-adult_male.webp",
+      "Adult male peregrine falcon"
     ],
     [
       "Peregrine_Falcon-juvenile01.webp",
@@ -1631,7 +1631,7 @@ const birdMedia = {
       "Adult loggerhead shrike"
     ],
     [
-      "Loggerhead_Shrike02.webp",
+      "Loggerhead_Shrike-adult03.webp",
       "Adult loggerhead shrike"
     ]
   ],
@@ -1854,6 +1854,9 @@ const defaultState = {
 };
 
 let state = loadState();
+if (state.docTab === "map") {
+  state.docTab = "description";
+}
 
 const elements = {
   body: document.body,
@@ -1872,7 +1875,6 @@ const elements = {
   birdQuickFact: document.getElementById("birdQuickFact"),
   birdPortrait: document.getElementById("birdPortrait"),
   descriptionPanel: document.getElementById("descriptionPanel"),
-  mapPanel: document.getElementById("mapPanel"),
   mediaPanel: document.getElementById("mediaPanel"),
   imageLightbox: document.getElementById("imageLightbox"),
   lightboxImage: document.getElementById("lightboxImage"),
@@ -2052,14 +2054,6 @@ function renderBirdDocument() {
       <div class="fact-tile"><span>Colors</span><strong>${bird.color}</strong></div>
       <div class="fact-tile"><span>Commonness</span><strong>${bird.commonness}</strong></div>
     </div>
-  `;
-
-  elements.mapPanel.innerHTML = `
-    <div class="map-stage" aria-label="Simplified Bay Area range map for ${bird.name}">
-      <div class="bay-shape"></div>
-      <div class="range-path" style="--x: ${bird.map.x}; --y: ${bird.map.y}; --size: ${bird.map.size};"></div>
-    </div>
-    <p class="map-note">${bird.mapNote}</p>
   `;
 
   const photos = birdPhotos(bird);
