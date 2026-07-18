@@ -1844,6 +1844,8 @@ const defaultState = {
 };
 
 let state = loadState();
+// Ensure the landing page defaults to the Bird Info tab
+state.mainTab = "birds";
 if (state.docTab === "map") {
   state.docTab = "description";
 }
