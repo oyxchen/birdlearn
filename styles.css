@@ -1,0 +1,1026 @@
+:root {
+  --bg: #c9f3c5;
+  --surface: #ffffff;
+  --surface-strong: #eef5ec;
+  --ink: #111815;
+  --muted: #60706a;
+  --line: #174e67;
+  --forest: #2f6f4e;
+  --teal: #1394a5;
+  --gold: #c47b28;
+  --berry: #a0455b;
+  --sky: #d9eef1;
+  --shadow: 0 18px 45px rgba(28, 48, 38, 0.12);
+  --text-scale: 1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.34) 0 9%, transparent 10%),
+    radial-gradient(circle at 88% 12%, rgba(86, 194, 107, 0.18) 0 12%, transparent 13%),
+    radial-gradient(circle at 70% 74%, rgba(255, 255, 255, 0.28) 0 15%, transparent 16%),
+    repeating-linear-gradient(174deg, rgba(25, 105, 64, 0.045) 0 2px, transparent 2px 9px),
+    linear-gradient(135deg, #a8ecb1 0%, #d8f8d5 48%, #aeeaae 100%),
+    var(--bg);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family:
+    "Comic Sans MS", "Chalkboard SE", "Marker Felt", ui-sans-serif, system-ui, sans-serif;
+  font-size: calc(16px * var(--text-scale));
+}
+
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.34) 0 9%, transparent 10%),
+    radial-gradient(circle at 88% 12%, rgba(86, 194, 107, 0.18) 0 12%, transparent 13%),
+    radial-gradient(circle at 70% 74%, rgba(255, 255, 255, 0.28) 0 15%, transparent 16%),
+    repeating-linear-gradient(174deg, rgba(25, 105, 64, 0.045) 0 2px, transparent 2px 9px),
+    linear-gradient(135deg, #a8ecb1 0%, #d8f8d5 48%, #aeeaae 100%),
+    var(--bg);
+  animation: splashFade 2.7s ease forwards;
+}
+
+.splash-card {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  width: min(530px, calc(100vw - 48px));
+  min-height: 275px;
+  border: 3px solid var(--teal);
+  border-radius: 58px;
+  background: rgba(209, 247, 208, 0.28);
+}
+
+.splash-bird {
+  width: 260px;
+  height: 165px;
+  margin-bottom: -34px;
+  background:
+    radial-gradient(ellipse at 43% 42%, #6b2b1e 0 13%, transparent 14%),
+    radial-gradient(circle at 39% 39%, #111 0 2%, transparent 2.6%),
+    linear-gradient(14deg, transparent 45%, #111 46% 49%, transparent 50%),
+    radial-gradient(ellipse at 51% 58%, #efe7dc 0 21%, transparent 22%),
+    linear-gradient(26deg, transparent 55%, #7b3b25 56% 61%, transparent 62%),
+    repeating-linear-gradient(150deg, transparent 0 13px, #151515 14px 18px, #9a5634 19px 31px),
+    linear-gradient(140deg, transparent 45%, #1f2421 46% 54%, transparent 55%);
+  clip-path: polygon(20% 38%, 40% 18%, 67% 22%, 86% 47%, 98% 70%, 72% 62%, 57% 76%, 34% 72%, 14% 56%, 0 50%);
+}
+
+.splash-title {
+  color: #24531d;
+  font-size: clamp(3rem, 7vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.splash-bulb {
+  display: inline-block;
+  margin-right: -2px;
+  font-size: 0.68em;
+  transform: translateY(-0.23em);
+}
+
+@keyframes splashFade {
+  0%,
+  74% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-shell {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 14px 12px 44px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+  padding: 24px 0 18px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--teal);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+  font-size: clamp(2.25rem, 8vw, 4.8rem);
+  line-height: 0.94;
+  letter-spacing: 0;
+}
+
+h2 {
+  margin-bottom: 12px;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+h3 {
+  margin-bottom: 8px;
+  font-size: 1.05rem;
+}
+
+.quick-stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.quick-stats span,
+.main-tab,
+.document-tab,
+.secondary-button {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--ink);
+}
+
+.quick-stats span {
+  min-width: 122px;
+  padding: 10px 12px;
+  color: var(--muted);
+}
+
+.quick-stats strong {
+  display: block;
+  color: var(--forest);
+  font-size: 1.2rem;
+}
+
+.main-tabs {
+  display: flex;
+  gap: 0;
+  margin: 0 0 0;
+}
+
+.main-tab,
+.document-tab,
+.secondary-button {
+  min-height: 58px;
+  padding: 10px 32px;
+  font-size: 1.45rem;
+  font-weight: 500;
+}
+
+.main-tab.is-active,
+.document-tab.is-active {
+  border-color: var(--teal);
+  background: #b8d9a6;
+  color: var(--ink);
+}
+
+.main-panel,
+.document-panel {
+  display: none;
+}
+
+.main-panel.is-active,
+.document-panel.is-active {
+  display: block;
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) 190px;
+  gap: 18px;
+  align-items: end;
+  justify-content: center;
+  margin: -12px auto 86px;
+  width: min(1120px, calc(100% - 120px));
+}
+
+.search-field,
+.sort-field,
+.setting-row {
+  display: grid;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+input,
+select {
+  width: 100%;
+  min-height: 56px;
+  border: 3px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--ink);
+  padding: 0 22px;
+}
+
+input::placeholder {
+  color: rgba(31, 31, 31, 0.28);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.search-field {
+  position: relative;
+  width: 100%;
+}
+
+.search-field input {
+  font-size: 1.45rem;
+}
+
+.sort-field span {
+  color: var(--ink);
+  font-size: 1.05rem;
+  padding-left: 4px;
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+.bird-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(210px, 1fr));
+  gap: 78px 60px;
+  width: min(1580px, calc(100% - 420px));
+  margin: 0 auto;
+}
+
+.bird-card {
+  display: grid;
+  grid-template-rows: minmax(82px, auto) 1fr 42px;
+  justify-items: center;
+  align-items: center;
+  min-height: 412px;
+  border: 3px solid #174e67;
+  border-radius: 58px;
+  background: rgba(255, 255, 255, 0.93);
+  color: #080b0b;
+  padding: 28px 38px 26px;
+  text-align: center;
+  box-shadow: none;
+  transition:
+    transform 160ms ease,
+    background 160ms ease;
+  animation: cardIn 340ms ease both;
+  animation-delay: var(--card-delay);
+}
+
+.bird-card:hover {
+  background: #fff;
+  transform: translateY(-4px);
+}
+
+.bird-card-title {
+  max-width: 100%;
+  font-size: clamp(2rem, 2.2vw, 2.55rem);
+  line-height: 1.1;
+}
+
+.bird-card-photo {
+  display: block;
+  width: min(255px, 100%);
+  height: 180px;
+  border: 0;
+  background:
+    radial-gradient(circle at 52% 34%, var(--bird-accent) 0 14%, transparent 15%),
+    radial-gradient(circle at 58% 31%, #111 0 2%, transparent 2.4%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 38%),
+    linear-gradient(155deg, #79add7, #dbe8e2 54%, var(--bird-wing));
+  background-size: cover;
+}
+
+.bird-card-photo.actual-photo {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 210px;
+  object-fit: initial;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.bird-portrait.has-photo {
+  min-height: 0;
+  width: fit-content;
+  max-width: 220px;
+  justify-self: end;
+  overflow: hidden;
+  background: none;
+}
+
+.bird-portrait-image {
+  display: block;
+  width: auto;
+  max-width: 220px;
+  height: auto;
+  max-height: 280px;
+  object-fit: initial;
+  border-radius: 8px;
+}
+
+.bird-card-date {
+  align-self: end;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 1.08rem;
+  color: #1f2423;
+}
+
+.bird-photo-american-avocet {
+  background:
+    radial-gradient(ellipse at 58% 43%, #f3efe5 0 24%, transparent 25%),
+    radial-gradient(ellipse at 72% 43%, #111 0 10%, transparent 11%),
+    linear-gradient(10deg, transparent 42%, #111 43% 46%, transparent 47%),
+    linear-gradient(180deg, #547a99 0%, #284860 100%);
+}
+
+.bird-photo-black-phoebe {
+  background:
+    radial-gradient(ellipse at 52% 38%, #242321 0 18%, transparent 19%),
+    radial-gradient(ellipse at 54% 58%, #f0ede5 0 13%, transparent 14%),
+    linear-gradient(145deg, transparent 52%, #7c5637 53% 56%, transparent 57%),
+    linear-gradient(180deg, #6cb5ff, #409cf0);
+}
+
+.bird-photo-coopers-hawk {
+  background:
+    radial-gradient(ellipse at 52% 35%, #687b8e 0 18%, transparent 19%),
+    repeating-linear-gradient(0deg, transparent 0 7px, rgba(144, 91, 46, 0.65) 8px 12px),
+    linear-gradient(90deg, #e6e6e6, #9aa2aa);
+}
+
+.bird-photo-green-winged-teal {
+  background:
+    radial-gradient(ellipse at 63% 48%, #694a32 0 21%, transparent 22%),
+    radial-gradient(ellipse at 56% 42%, #1f8d65 0 9%, transparent 10%),
+    linear-gradient(120deg, transparent 50%, #159357 51% 58%, transparent 59%),
+    linear-gradient(180deg, #e8e8e3, #b8b9b0);
+}
+
+.bird-photo-snowy-egret {
+  background:
+    radial-gradient(ellipse at 48% 47%, #fff 0 24%, transparent 25%),
+    linear-gradient(25deg, transparent 48%, #1b2224 49% 51%, transparent 52%),
+    linear-gradient(180deg, #6b6048, #9d9585);
+}
+
+.bird-photo-peregrine-falcon {
+  background:
+    radial-gradient(ellipse at 58% 39%, #2f3842 0 16%, transparent 17%),
+    radial-gradient(ellipse at 63% 39%, #f5c21f 0 4%, transparent 5%),
+    repeating-linear-gradient(0deg, #ece0cf 0 7px, #5c6570 8px 12px),
+    linear-gradient(180deg, #c3a281, #8e7660);
+}
+
+.bird-photo-great-blue-heron {
+  background:
+    radial-gradient(ellipse at 50% 45%, #8492a0 0 16%, transparent 17%),
+    linear-gradient(20deg, transparent 41%, #d97b38 42% 45%, transparent 46%),
+    linear-gradient(80deg, transparent 47%, #445666 48% 51%, transparent 52%),
+    linear-gradient(180deg, #638bb8, #c7b991);
+}
+
+.bird-detail {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.back-button {
+  min-height: 44px;
+  margin: 0 0 14px;
+  border: 3px solid #174e67;
+  border-radius: 12px;
+  background: #f7fbf6;
+  padding: 8px 18px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bird-layout {
+  display: grid;
+  grid-template-columns: 310px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.bird-list,
+.bird-document,
+.metric-card,
+.badges-section,
+.settings-grid {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow);
+}
+
+.bird-list {
+  max-height: 690px;
+  overflow: auto;
+  padding: 10px;
+}
+
+.bird-list-button {
+  width: 100%;
+  min-height: 72px;
+  margin-bottom: 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  padding: 10px;
+}
+
+.bird-list-button:hover,
+.bird-list-button.is-active {
+  border-color: var(--line);
+  background: var(--surface-strong);
+}
+
+.bird-list-button strong,
+.bird-list-button span {
+  display: block;
+}
+
+.bird-list-button span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.bird-document {
+  overflow: hidden;
+}
+
+.bird-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 18px;
+  align-items: stretch;
+  min-height: 220px;
+  padding: 24px;
+  background: linear-gradient(135deg, #ffffff 0%, #ecf6ef 58%, #d9eef1 100%);
+}
+
+.quick-fact {
+  max-width: 62ch;
+  margin-bottom: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.bird-portrait {
+  min-height: 170px;
+  border-radius: 8px;
+  border: 1px solid rgba(31, 42, 36, 0.14);
+  background:
+    radial-gradient(circle at 50% 38%, var(--bird-accent, #c47b28) 0 17%, transparent 18%),
+    radial-gradient(circle at 58% 33%, #1f2a24 0 2%, transparent 2.4%),
+    linear-gradient(145deg, var(--bird-wing, #2f6f4e) 0 46%, var(--bird-accent, #c47b28) 47% 68%, #f7dfb8 69% 100%);
+}
+
+.document-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  padding: 14px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: #fbfdf9;
+}
+
+.document-panel {
+  padding: 24px;
+}
+
+.essay {
+  max-width: 76ch;
+  color: #34423a;
+  line-height: 1.8;
+}
+
+.fact-grid,
+.analysis-grid,
+.badges-grid,
+.media-grid,
+.quiz-options {
+  display: grid;
+  gap: 14px;
+}
+
+.fact-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 18px;
+}
+
+.fact-tile,
+.media-card,
+.quiz-question,
+.badge-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  padding: 16px;
+}
+
+.fact-tile span,
+.metric-label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.fact-tile strong {
+  display: block;
+  margin-top: 6px;
+}
+
+.map-stage {
+  position: relative;
+  min-height: 360px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgba(24, 119, 121, 0.1), transparent 44%),
+    radial-gradient(circle at 48% 44%, #b7d7bc 0 20%, transparent 21%),
+    radial-gradient(circle at 58% 53%, #9fcda8 0 15%, transparent 16%),
+    linear-gradient(135deg, #d9eef1, #f9fbf5);
+}
+
+.bay-shape {
+  position: absolute;
+  left: 48%;
+  top: 12%;
+  width: 24%;
+  height: 76%;
+  border-radius: 48% 52% 44% 55%;
+  background: #7abec7;
+  transform: rotate(9deg);
+}
+
+.range-path {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--size);
+  height: var(--size);
+  border: 3px solid var(--berry);
+  border-radius: 50%;
+  background: rgba(160, 69, 91, 0.12);
+}
+
+.map-note {
+  margin-top: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.media-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  justify-items: center;
+}
+
+.media-art {
+  height: 150px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 50% 35%, var(--bird-accent, #c47b28) 0 18%, transparent 19%),
+    linear-gradient(135deg, var(--bird-wing, #2f6f4e), #f4e9cf);
+}
+
+.media-photo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 340px;
+  object-fit: initial;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.media-caption {
+  margin: 10px 0 0;
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.media-empty {
+  display: grid;
+  place-items: center;
+  min-height: 190px;
+}
+
+.media-photo-card {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  justify-self: center;
+  cursor: zoom-in;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+}
+
+.media-photo-card:hover {
+  border-color: var(--teal);
+  transform: translateY(-2px);
+}
+
+.image-lightbox {
+  position: fixed;
+  z-index: 200;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background: rgba(11, 16, 21, 0.88);
+}
+
+.image-lightbox.hidden,
+.image-lightbox[aria-hidden="true"] {
+  display: none !important;
+}
+
+.lightbox-figure {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  max-width: min(1100px, 100%);
+  max-height: 100%;
+  margin: 0;
+}
+
+.lightbox-figure img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 115px);
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+.lightbox-figure figcaption {
+  color: #fff;
+  font-weight: 800;
+  text-align: center;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  width: 46px;
+  height: 46px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  background: #fff;
+  color: #111;
+  cursor: pointer;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.sound-button,
+.quiz-option {
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-strong);
+  color: var(--ink);
+  padding: 10px 12px;
+  font-weight: 800;
+}
+
+.sound-player {
+  width: 100%;
+  margin: 8px 0;
+}
+
+.recording-credit {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.sound-button:hover,
+.quiz-option:hover {
+  border-color: var(--forest);
+}
+
+.quiz-form {
+  display: grid;
+  gap: 16px;
+}
+
+.quiz-options {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.quiz-option.is-selected {
+  border-color: var(--teal);
+  background: var(--sky);
+}
+
+.quiz-option.is-correct {
+  border-color: var(--forest);
+  background: #e7f5df;
+}
+
+.quiz-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.primary-button {
+  min-height: 46px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--forest);
+  color: #fff;
+  padding: 10px 16px;
+  font-weight: 900;
+}
+
+.quiz-result {
+  margin-bottom: 0;
+  color: var(--forest);
+  font-weight: 900;
+}
+
+.analysis-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 18px;
+}
+
+.metric-card {
+  padding: 20px;
+}
+
+.metric-card strong {
+  display: block;
+  margin: 8px 0;
+  color: var(--forest);
+  font-size: 2.3rem;
+}
+
+.metric-card p,
+.badge-card p {
+  margin-bottom: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.badges-section {
+  padding: 20px;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.section-heading h2 {
+  margin-bottom: 0;
+}
+
+.badges-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.badge-card {
+  min-height: 160px;
+}
+
+.badge-card.is-earned {
+  border-color: rgba(196, 123, 40, 0.55);
+  background: #fff8ec;
+}
+
+.badge-level {
+  display: inline-flex;
+  min-width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--forest);
+  color: #fff;
+  font-weight: 900;
+}
+
+.progress-track {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e8eee5;
+  margin: 14px 0 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  width: var(--progress);
+  background: linear-gradient(90deg, var(--gold), var(--forest));
+}
+
+.settings-grid {
+  display: grid;
+  gap: 18px;
+  padding: 22px;
+}
+
+.setting-row {
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 260px);
+  align-items: center;
+}
+
+.setting-row small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+}
+
+@media (max-width: 1280px) {
+  .toolbar {
+    width: min(820px, calc(100% - 120px));
+    margin-bottom: 58px;
+  }
+
+  .bird-grid {
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 44px;
+    width: min(980px, calc(100% - 80px));
+  }
+}
+
+@media (max-width: 850px) {
+  .topbar,
+  .section-heading,
+  .setting-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .topbar,
+  .section-heading {
+    display: flex;
+  }
+
+  .toolbar,
+  .bird-hero,
+  .setting-row {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar {
+    width: min(680px, calc(100% - 72px));
+    margin-top: 24px;
+    margin-bottom: 42px;
+  }
+
+  .bird-grid {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    gap: 32px;
+    width: min(720px, calc(100% - 32px));
+  }
+
+  .bird-card {
+    min-height: 360px;
+  }
+
+  .document-tabs,
+  .analysis-grid,
+  .badges-grid,
+  .media-grid,
+  .fact-grid,
+  .quiz-options {
+    grid-template-columns: 1fr;
+  }
+
+  .bird-list {
+    max-height: 260px;
+  }
+}
+
+@media (max-width: 560px) {
+  .app-shell {
+    width: 100%;
+    padding: 10px 10px 32px;
+  }
+
+  .main-tabs {
+    flex-wrap: wrap;
+  }
+
+  .main-tab {
+    flex: 1 1 100%;
+    min-height: 48px;
+    font-size: 1.18rem;
+  }
+
+  .toolbar {
+    width: min(100% - 28px, 420px);
+    margin: 28px auto 30px;
+  }
+
+  .search-field input {
+    min-height: 50px;
+    font-size: 1.1rem;
+  }
+
+  .bird-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    width: min(360px, calc(100% - 22px));
+  }
+
+  .bird-card {
+    min-height: 330px;
+    border-radius: 42px;
+    padding: 22px 28px;
+  }
+
+  .bird-card-title {
+    font-size: 1.9rem;
+  }
+
+  .bird-card-photo {
+    height: 150px;
+  }
+
+  .document-panel,
+  .bird-hero {
+    padding: 16px;
+  }
+
+  .document-tabs {
+    grid-template-columns: 1fr 1fr;
+  }
+}

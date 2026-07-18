@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="BirdLearn helps learners explore Bay Area birds through facts, maps, pictures, sounds, quizzes, and progress badges."
+    />
+    <title>BirdLearn</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="splash-screen" aria-hidden="true">
+      <div class="splash-card">
+        <div class="splash-bird" role="img" aria-label="BirdLearn bird logo"></div>
+        <div class="splash-title"><span class="splash-bulb">💡</span>BirdLearn</div>
+      </div>
+    </div>
+    <div class="app-shell">
+      <nav class="main-tabs" aria-label="Main sections">
+        <button class="main-tab is-active" type="button" data-main-tab="birds">Bird Info</button>
+        <button class="main-tab" type="button" data-main-tab="analysis">Analysis</button>
+        <button class="main-tab" type="button" data-main-tab="settings">Settings</button>
+      </nav>
+
+      <main>
+        <section class="main-panel is-active" id="birdsPanel" data-panel="birds">
+          <div id="birdToolbar" class="toolbar">
+            <label class="search-field">
+              <span class="visually-hidden">Search by bird name</span>
+              <input id="searchInput" type="search" placeholder="Search by bird name..." />
+            </label>
+            <label class="sort-field">
+              <span>Sort</span>
+              <select id="sortSelect">
+                <option value="alpha">A-Z</option>
+                <option value="zalpha">Z-A</option>
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+              </select>
+            </label>
+          </div>
+
+          <div id="birdGrid" class="bird-grid" aria-label="Bird species"></div>
+          <div id="birdDetail" class="bird-detail is-hidden">
+            <button id="backToGrid" class="back-button" type="button">Back to birds</button>
+            <article class="bird-document" aria-live="polite">
+              <div class="bird-hero">
+                <div>
+                  <p class="eyebrow" id="birdHabitat"></p>
+                  <h2 id="birdName"></h2>
+                  <p id="birdQuickFact" class="quick-fact"></p>
+                </div>
+                <div id="birdPortrait" class="bird-portrait" role="img"></div>
+              </div>
+
+              <nav class="document-tabs" aria-label="Bird document tabs">
+                <button class="document-tab is-active" type="button" data-doc-tab="description">Article</button>
+                <button class="document-tab" type="button" data-doc-tab="map">Map</button>
+                <button class="document-tab" type="button" data-doc-tab="media">Pictures & Sounds</button>
+                <button class="document-tab" type="button" data-doc-tab="quiz">Quiz</button>
+              </nav>
+
+              <section class="document-panel is-active" id="descriptionPanel" data-doc-panel="description"></section>
+              <section class="document-panel" id="mapPanel" data-doc-panel="map"></section>
+              <section class="document-panel" id="mediaPanel" data-doc-panel="media"></section>
+              <section class="document-panel" id="quizPanel" data-doc-panel="quiz"></section>
+            </article>
+          </div>
+        </section>
+
+        <section class="main-panel" id="analysisPanel" data-panel="analysis">
+          <div class="analysis-grid">
+            <section class="metric-card">
+              <span class="metric-label">Quiz Progress</span>
+              <strong id="completedMetric">0</strong>
+              <p id="completedDetail">No quizzes completed yet.</p>
+            </section>
+            <section class="metric-card">
+              <span class="metric-label">Quiz Accuracy</span>
+              <strong id="accuracyMetric">0%</strong>
+              <p id="accuracyDetail">Answer questions to see your average.</p>
+            </section>
+            <section class="metric-card">
+              <span class="metric-label">Perfect Quizzes</span>
+              <strong id="perfectMetric">0</strong>
+              <p>100% scores count toward Fact Master.</p>
+            </section>
+          </div>
+          <section class="badges-section">
+            <div class="section-heading">
+              <h2>Badges</h2>
+            </div>
+            <div id="badgesGrid" class="badges-grid"></div>
+          </section>
+        </section>
+
+        <section class="main-panel" id="settingsPanel" data-panel="settings">
+          <section class="settings-grid">
+            <label class="setting-row">
+              <span>
+                <strong>Volume</strong>
+                <small>Controls bird sound playback</small>
+              </span>
+              <input id="volumeRange" type="range" min="0" max="100" step="5" />
+            </label>
+            <label class="setting-row">
+              <span>
+                <strong>Text size</strong>
+                <small>Changes reading size across BirdLearn</small>
+              </span>
+              <select id="textSizeSelect">
+                <option value="small">Small</option>
+                <option value="normal">Normal</option>
+                <option value="large">Large</option>
+              </select>
+            </label>
+          </section>
+        </section>
+      </main>
+    </div>
+    <div id="imageLightbox" class="image-lightbox hidden" role="dialog" aria-modal="true" aria-labelledby="lightboxCaption" aria-hidden="true">
+      <button id="closeLightbox" class="lightbox-close" type="button" aria-label="Close image">×</button>
+      <figure class="lightbox-figure">
+        <img id="lightboxImage" alt="" />
+        <figcaption id="lightboxCaption"></figcaption>
+      </figure>
+    </div>
+
+    <script src="app.js?v=20260717-sounds"></script>
+  </body>
+</html>
