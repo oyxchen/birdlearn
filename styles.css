@@ -642,6 +642,21 @@ input::placeholder {
   justify-items: center;
 }
 
+.media-card {
+  width: min(100%, 340px);
+  justify-self: start;
+}
+
+.media-grid > .media-card:last-child {
+  grid-column: 1;
+}
+
+.media-photo-card {
+  width: fit-content;
+  max-width: 100%;
+  justify-self: center;
+}
+
 .media-art {
   height: 150px;
   border-radius: 8px;

@@ -2058,15 +2058,41 @@ function renderBirdDocument() {
             </button>
           `,
         ).join("") : `<div class="media-card media-empty"><p class="map-note">No field photos have been added for ${bird.name} yet.</p></div>`}
-      <div class="media-card">
+      <div class="media-card bird-call-card">
         <h3>Bird Call</h3>
-        ${sound ? `
-          <audio class="sound-player" id="birdSoundPlayer" controls src="${birdSoundUrl(sound.file)}"></audio>
-          <p class="recording-credit">Recorded by ${sound.recordist}</p>
-        ` : `<p class="map-note">No recording available for ${bird.name}.</p>`}
+        <p class="map-note"></p>
+        ${sound ? `<audio class="sound-player" id="birdSoundPlayer" controls src="${birdSoundUrl(sound.file)}"></audio>` : ""}
+        ${sound ? `<p class="recording-credit">Recorded by ${sound.recordist}</p>` : ""}
       </div>
     </div>
   `;
+
+  const alignBirdCall = () => {
+    const firstPhoto = elements.mediaPanel.querySelector('.media-photo-card');
+    const birdCallCard = elements.mediaPanel.querySelector('.bird-call-card');
+    const mediaGrid = elements.mediaPanel.querySelector('.media-grid');
+
+    if (!firstPhoto || !birdCallCard || !mediaGrid) {
+      if (birdCallCard) birdCallCard.style.marginLeft = '';
+      return;
+    }
+
+    const photoRect = firstPhoto.getBoundingClientRect();
+    const gridRect = mediaGrid.getBoundingClientRect();
+    const offset = Math.max(0, photoRect.left - gridRect.left);
+    birdCallCard.style.marginLeft = `${offset}px`;
+  };
+
+  const firstPhotoImage = elements.mediaPanel.querySelector('.media-photo-card img');
+  if (firstPhotoImage) {
+    if (firstPhotoImage.complete) {
+      alignBirdCall();
+    } else {
+      firstPhotoImage.addEventListener('load', alignBirdCall, { once: true });
+    }
+  }
+
+  window.requestAnimationFrame(alignBirdCall);
 
   elements.mediaPanel.querySelectorAll(".media-photo-card").forEach((card) => {
     card.addEventListener("click", () => openLightbox(card.dataset.photo, card.dataset.caption));
