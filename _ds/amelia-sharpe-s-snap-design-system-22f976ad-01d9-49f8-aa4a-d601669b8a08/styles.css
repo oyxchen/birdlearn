@@ -1,0 +1,16 @@
+/* ==========================================================================
+   Amelia's Snap Design System — root stylesheet
+   --------------------------------------------------------------------------
+   Canonical entry point. Link THIS file and you get all design tokens,
+   the type scale, Inter from Google Fonts, and the Graphik/Ghost Sans
+   @font-face declarations:
+
+       <link rel="stylesheet" href="styles.css">
+
+   The scoped helper stylesheets are intentionally NOT imported here — they
+   belong to specific surfaces and are linked locally where needed:
+     • slides/slides.css   — slide-deck layout classes
+     • preview/_card.css   — design-system preview-card framing
+   Both already @import this token foundation on their own.
+   ========================================================================== */
+@import url("colors_and_type.css");

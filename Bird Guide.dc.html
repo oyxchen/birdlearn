@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/amelia-sharpe-s-snap-design-system-22f976ad-01d9-49f8-aa4a-d601669b8a08/colors_and_type.css">
+<link rel="stylesheet" href="_ds/amelia-sharpe-s-snap-design-system-22f976ad-01d9-49f8-aa4a-d601669b8a08/styles.css">
+<script src="_ds/amelia-sharpe-s-snap-design-system-22f976ad-01d9-49f8-aa4a-d601669b8a08/_ds_bundle.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="./image-slot.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  a, a:visited { color: inherit; text-decoration: none; }
+  a:hover { text-decoration: none; }
+  .chip { cursor:pointer; user-select:none; transition: filter var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out); }
+  .chip:active { transform: scale(0.97); }
+  .bcard { transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); cursor:pointer; }
+  .bcard:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .btn { cursor:pointer; user-select:none; transition: filter var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out); }
+  .btn:hover { filter: brightness(0.96); }
+  .btn-dark:hover { filter: brightness(1.08); }
+  .btn:active { transform: scale(0.97); }
+  .qopt { transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out); }
+  .qopt-live { cursor:pointer; }
+  .qopt-live:hover { filter: brightness(0.98); transform: translateX(2px); }
+  @keyframes pop { 0%{transform:scale(0.9);opacity:0;} 60%{transform:scale(1.03);} 100%{transform:scale(1);opacity:1;} }
+  @keyframes fadein { from{opacity:0;} to{opacity:1;} }
+  @keyframes floaty { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+  .celebrate-card { animation: pop var(--dur-slow) var(--ease-spring) both; }
+  .overlay-bg { animation: fadein var(--dur-base) var(--ease-out) both; }
+  .float { animation: floaty 3s ease-in-out infinite; }
+  .navbtn { cursor:pointer; transition: background var(--dur-fast) var(--ease-out); }
+  input:focus { outline: 2px solid var(--snap-yellow); }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--bg);font-family:var(--font-body);">
+
+  <!-- ============ NAV ============ -->
+  <div style="position:sticky;top:0;z-index:50;background:rgba(251,251,245,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);">
+    <div style="max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 32px;">
+      <div class="navbtn" onClick="{{ goHome }}" style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+        <span style="font-size:26px;" class="float">🐦</span>
+        <span style="font:var(--h5);letter-spacing:var(--track-tight);">{{ siteName }}</span>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="3">
+          <span class="navbtn" onClick="{{ n.onClick }}" style="{{ n.style }}">{{ n.label }}</span>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BIRDS GALLERY ============ -->
+  <sc-if value="{{ isBirds }}" hint-placeholder-val="{{ true }}">
+    <div style="max-width:1180px;margin:0 auto;padding:0 32px 72px;">
+      <div style="display:flex;gap:28px;align-items:center;padding:48px 0 8px;">
+        <div style="flex:1;">
+          <div class="eyebrow">San Francisco Bay Area</div>
+          <h1 style="font:var(--h1);margin:8px 0 12px;">Meet the birds<br>of the Bay</h1>
+          <p class="lead" style="margin:0 0 20px;max-width:480px;">Twenty-five feathered neighbors to spot, hear, and get to know. Read a story, listen to each call, then take the quiz to earn your badges.</p>
+          <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:12px 20px;max-width:420px;box-shadow:var(--shadow-xs);">
+            <i data-lucide="search" style="width:18px;height:18px;color:var(--fg-subtle);"></i>
+            <input value="{{ query }}" onInput="{{ onQuery }}" placeholder="Search by name…" style="border:0;outline:0;background:transparent;font:var(--p);flex:1;color:var(--fg);"/>
+          </div>
+        </div>
+        <div class="float" style="width:230px;height:180px;border-radius:24px;background:var(--snap-yellow);display:flex;align-items:center;justify-content:center;flex:0 0 auto;box-shadow:var(--shadow-sm);">
+          <span style="font-size:96px;">🦆</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 26px;">
+        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+          <span class="chip" onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</span>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
+          <sc-for list="{{ shown }}" as="b" hint-placeholder-count="8">
+            <div class="bcard" onClick="{{ b.onOpen }}" style="background:#fff;border-radius:18px;overflow:hidden;box-shadow:var(--shadow-sm);">
+              <div style="height:150px;background:{{ b.tint }};display:flex;align-items:flex-start;justify-content:space-between;padding:12px;">
+                <span style="{{ b.statusPill }}">{{ b.status }}</span>
+                <sc-if value="{{ b.done }}" hint-placeholder-val="{{ false }}">
+                  <span style="font:var(--caption);font-weight:700;background:#000;color:var(--snap-yellow);padding:3px 9px;border-radius:999px;">{{ b.doneLabel }}</span>
+                </sc-if>
+              </div>
+              <div style="height:0;text-align:center;transform:translateY(-92px);pointer-events:none;"><span style="font-size:60px;">{{ b.emoji }}</span></div>
+              <div style="padding:8px 16px 18px;">
+                <div style="font:var(--h6);letter-spacing:var(--track-tight);">{{ b.name }}</div>
+                <div style="font:var(--caption);color:var(--fg-muted);font-style:italic;margin:2px 0 10px;">{{ b.sci }}</div>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                  <span style="font:var(--caption);background:var(--neutral-100);padding:4px 10px;border-radius:999px;">{{ b.sizeClass }}</span>
+                  <span style="font:var(--caption);background:var(--neutral-100);padding:4px 10px;border-radius:999px;">{{ b.groupLabel }}</span>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align:center;padding:60px 0;color:var(--fg-muted);">
+          <div style="font-size:48px;">🔍</div>
+          <p style="margin-top:12px;">No birds match “{{ query }}”. Try another name.</p>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <!-- ============ SPECIES DETAIL ============ -->
+  <sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:1000px;margin:0 auto;padding:28px 32px 80px;">
+      <span class="navbtn btn" onClick="{{ goHome }}" style="display:inline-flex;align-items:center;gap:6px;font:var(--p-sm);font-weight:600;color:var(--fg-muted);padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--border);cursor:pointer;">
+        <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> All birds
+      </span>
+
+      <!-- hero -->
+      <div style="display:flex;gap:32px;margin-top:24px;align-items:stretch;flex-wrap:wrap;">
+        <div style="flex:1 1 380px;min-width:320px;border-radius:24px;overflow:hidden;box-shadow:var(--shadow-sm);position:relative;min-height:300px;background:{{ d.tint }};">
+          <image-slot id="{{ d.mainPhotoId }}" shape="rect" placeholder="{{ d.mainPhotoPlaceholder }}"></image-slot>
+        </div>
+        <div style="flex:1 1 360px;min-width:300px;display:flex;flex-direction:column;justify-content:center;">
+          <div class="eyebrow">{{ d.groupLabel }}</div>
+          <h1 style="font:var(--h1);font-size:52px;margin:8px 0 6px;">{{ d.name }}</h1>
+          <div style="font:var(--p-lg);font-style:italic;color:var(--fg-muted);margin-bottom:14px;">{{ d.sci }}</div>
+          <span style="{{ d.statusPillBig }}">{{ d.statusLabel }}</span>
+          <p class="lead" style="margin:18px 0 0;">{{ d.intro }}</p>
+        </div>
+      </div>
+
+      <!-- key info boxes -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px;">
+        <div style="background:#fff;border-radius:16px;padding:22px;box-shadow:var(--shadow-sm);">
+          <div style="width:42px;height:42px;border-radius:12px;background:rgba(0,182,255,0.14);display:flex;align-items:center;justify-content:center;margin-bottom:12px;"><i data-lucide="ruler" style="width:22px;height:22px;color:#0090cc;"></i></div>
+          <div class="eyebrow">Size</div>
+          <div style="font:var(--h5);margin:4px 0 6px;">{{ d.sizeClass }}</div>
+          <div style="font:var(--p-sm);color:var(--fg-muted);">{{ d.sizeDetail }}</div>
+        </div>
+        <div style="background:#fff;border-radius:16px;padding:22px;box-shadow:var(--shadow-sm);">
+          <div style="width:42px;height:42px;border-radius:12px;background:rgba(204,74,251,0.12);display:flex;align-items:center;justify-content:center;margin-bottom:12px;"><i data-lucide="palette" style="width:22px;height:22px;color:#a12fd6;"></i></div>
+          <div class="eyebrow">Colors</div>
+          <div style="font:var(--h5);margin:4px 0 6px;">{{ d.colorTitle }}</div>
+          <div style="font:var(--p-sm);color:var(--fg-muted);">{{ d.colorsDetail }}</div>
+        </div>
+        <div style="background:#fff;border-radius:16px;padding:22px;box-shadow:var(--shadow-sm);">
+          <div style="{{ d.statusIconWrap }}"><i data-lucide="{{ d.statusIcon }}" style="width:22px;height:22px;color:{{ d.statusColor }};"></i></div>
+          <div class="eyebrow">Commonness</div>
+          <div style="font:var(--h5);margin:4px 0 6px;">{{ d.statusLabel }}</div>
+          <div style="font:var(--p-sm);color:var(--fg-muted);">{{ d.statusDetail }}</div>
+        </div>
+      </div>
+
+      <!-- article + fun fact -->
+      <div style="display:flex;gap:32px;margin-top:40px;flex-wrap:wrap;">
+        <div style="flex:1 1 460px;min-width:300px;">
+          <h3 style="margin-bottom:16px;">About the {{ d.name }}</h3>
+          <sc-for list="{{ d.article }}" as="para" hint-placeholder-count="3">
+            <p style="font:var(--p-lg);margin-bottom:16px;">{{ para }}</p>
+          </sc-for>
+        </div>
+        <sc-if value="{{ showFunFacts }}" hint-placeholder-val="{{ true }}">
+          <div style="flex:0 0 260px;align-self:flex-start;background:var(--snap-pale-yellow);border-radius:20px;padding:24px;">
+            <div style="font-size:34px;margin-bottom:8px;">💡</div>
+            <div class="eyebrow" style="color:rgba(0,0,0,0.55);">Did you know?</div>
+            <p style="font:var(--p);margin:8px 0 0;">{{ d.fact }}</p>
+          </div>
+        </sc-if>
+      </div>
+
+      <!-- photo gallery -->
+      <div style="margin-top:44px;">
+        <h3 style="margin-bottom:16px;">Photo gallery</h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+          <sc-for list="{{ d.galleryPhotos }}" as="p" hint-placeholder-count="3">
+            <div style="border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);height:180px;background:{{ d.tint }};position:relative;">
+              <image-slot id="{{ p.id }}" shape="rect" placeholder="{{ p.placeholder }}"></image-slot>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- audio player -->
+      <div style="margin-top:44px;">
+        <h3 style="margin-bottom:16px;">Listen to its call</h3>
+        <div style="background:#fff;border-radius:20px;padding:22px 24px;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:20px;">
+          <div class="btn" onClick="{{ d.togglePlay }}" style="width:60px;height:60px;border-radius:50%;background:var(--snap-yellow);display:flex;align-items:center;justify-content:center;flex:0 0 auto;box-shadow:var(--shadow-yellow);cursor:pointer;">
+            <i data-lucide="{{ d.playIcon }}" style="width:26px;height:26px;color:#000;"></i>
+          </div>
+          <div style="flex:1;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+              <span style="font:var(--h6);">{{ d.name }} call</span>
+              <span style="font:var(--caption);color:var(--fg-muted);font-family:var(--font-mono);">{{ d.audioTime }}</span>
+            </div>
+            <div style="height:8px;background:var(--neutral-100);border-radius:999px;overflow:hidden;">
+              <div style="{{ d.audioProgress }}"></div>
+            </div>
+            <div style="font:var(--caption);color:var(--fg-subtle);margin-top:8px;">🔊 Sound placeholder — drop in a recording of the {{ d.name }}’s call.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- quiz -->
+      <div style="margin-top:52px;background:#fff;border-radius:24px;padding:32px;box-shadow:var(--shadow-sm);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
+          <span style="font-size:30px;">🧠</span>
+          <h3 style="margin:0;">Quiz time</h3>
+        </div>
+        <p style="color:var(--fg-muted);margin-bottom:8px;">Answer every question correctly to earn an accuracy point for the {{ d.name }}. Tap an answer to lock it in.</p>
+        <div style="font:var(--caption);color:var(--fg-subtle);margin-bottom:24px;">{{ d.quiz.progressText }}</div>
+
+        <div style="display:flex;flex-direction:column;gap:22px;">
+          <sc-for list="{{ d.quiz.questions }}" as="q" hint-placeholder-count="4">
+            <div>
+              <div style="font:var(--h6);margin-bottom:12px;"><span style="color:var(--fg-subtle);">{{ q.numLabel }}</span>  {{ q.q }}</div>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <sc-for list="{{ q.opts }}" as="o" hint-placeholder-count="4">
+                  <div class="qopt {{ o.liveClass }}" onClick="{{ o.onClick }}" style="{{ o.style }}">
+                    <span>{{ o.text }}</span>
+                    <span style="font-weight:800;">{{ o.mark }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ d.quiz.showFinish }}" hint-placeholder-val="{{ false }}">
+          <div class="btn btn-dark" onClick="{{ d.quiz.onFinish }}" style="margin-top:26px;display:inline-flex;align-items:center;gap:8px;background:#000;color:#fff;font:var(--p);font-weight:600;padding:14px 28px;border-radius:999px;cursor:pointer;">
+            Finish quiz <i data-lucide="check" style="width:18px;height:18px;"></i>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ d.quiz.finished }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ d.quiz.resultStyle }}">
+            <div style="font:var(--h4);margin-bottom:4px;">{{ d.quiz.resultTitle }}</div>
+            <div style="font:var(--p-lg);color:var(--fg-muted);margin-bottom:16px;">{{ d.quiz.resultText }}</div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+              <span class="btn" onClick="{{ d.quiz.onRetry }}" style="background:#fff;border:1px solid var(--border);font:var(--p-sm);font-weight:600;padding:11px 22px;border-radius:999px;cursor:pointer;">Try again</span>
+              <span class="btn btn-dark" onClick="{{ goBadges }}" style="background:#000;color:#fff;font:var(--p-sm);font-weight:600;padding:11px 22px;border-radius:999px;cursor:pointer;">See my badges →</span>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ BADGES ============ -->
+  <sc-if value="{{ isBadges }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:1000px;margin:0 auto;padding:48px 32px 90px;">
+      <div class="eyebrow">Your progress</div>
+      <h1 style="font:var(--h1);margin:8px 0 10px;">Badge nest</h1>
+      <p class="lead" style="max-width:560px;">Every 5 quizzes you take earns a level badge. Every 3 birds you get perfect earns a medal. Get all 25 perfect to become the Grandmaster of the Bay.</p>
+
+      <!-- summary -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:28px 0 44px;">
+        <div style="background:var(--snap-yellow);border-radius:20px;padding:24px;">
+          <div style="font:var(--h-display);font-size:56px;line-height:1;">{{ badges.taken }}<span style="font:var(--h4);color:rgba(0,0,0,0.5);">/25</span></div>
+          <div style="font:var(--p);font-weight:600;margin-top:6px;">Quizzes taken</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px;box-shadow:var(--shadow-sm);">
+          <div style="font:var(--h-display);font-size:56px;line-height:1;">{{ badges.points }}<span style="font:var(--h4);color:var(--fg-subtle);">/25</span></div>
+          <div style="font:var(--p);font-weight:600;margin-top:6px;">Perfect birds</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px;box-shadow:var(--shadow-sm);">
+          <div style="font:var(--h-display);font-size:56px;line-height:1;">{{ badges.earnedCount }}</div>
+          <div style="font:var(--p);font-weight:600;margin-top:6px;">Badges earned</div>
+        </div>
+      </div>
+
+      <!-- participation ladder -->
+      <h3 style="margin-bottom:6px;">Explorer levels</h3>
+      <p style="color:var(--fg-muted);margin-bottom:20px;">Earned by taking quizzes — one new level every 5 birds.</p>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:48px;">
+        <sc-for list="{{ badges.participation }}" as="p" hint-placeholder-count="5">
+          <div style="{{ p.cardStyle }}">
+            <div style="{{ p.circleStyle }}">{{ p.icon }}</div>
+            <div style="font:var(--h6);text-align:center;margin-top:12px;">{{ p.name }}</div>
+            <div style="font:var(--caption);color:var(--fg-muted);text-align:center;margin-top:2px;">{{ p.req }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- accuracy ladder -->
+      <h3 style="margin-bottom:6px;">Accuracy medals</h3>
+      <p style="color:var(--fg-muted);margin-bottom:20px;">Earned by getting a bird’s whole quiz right — one medal every 3 perfect birds.</p>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px;">
+        <sc-for list="{{ badges.accuracy }}" as="a" hint-placeholder-count="8">
+          <div style="{{ a.cardStyle }}">
+            <div style="{{ a.circleStyle }}">{{ a.icon }}</div>
+            <div style="font:var(--h6);text-align:center;margin-top:12px;">{{ a.name }}</div>
+            <div style="font:var(--caption);color:var(--fg-muted);text-align:center;margin-top:2px;">{{ a.req }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- grandmaster -->
+      <div style="{{ badges.grandStyle }}">
+        <div style="font-size:64px;" class="{{ badges.grandFloat }}">👑</div>
+        <div style="flex:1;">
+          <div class="eyebrow" style="color:{{ badges.grandEyebrow }};">The final badge</div>
+          <div style="font:var(--h3);margin:4px 0 6px;">Grandmaster of the Bay</div>
+          <div style="font:var(--p-lg);color:{{ badges.grandTextColor }};">{{ badges.grandText }}</div>
+        </div>
+      </div>
+
+      <div style="margin-top:36px;text-align:center;">
+        <span class="btn" onClick="{{ resetProgress }}" style="font:var(--p-sm);font-weight:600;color:var(--fg-muted);background:#fff;border:1px solid var(--border);padding:10px 20px;border-radius:999px;cursor:pointer;">Reset my progress</span>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ ABOUT ============ -->
+  <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:900px;margin:0 auto;padding:48px 32px 90px;">
+      <div class="eyebrow">About</div>
+      <h1 style="font:var(--h1);margin:8px 0 24px;">A note from the author</h1>
+
+      <div style="background:var(--snap-pale-yellow);border-radius:24px;padding:36px;margin-bottom:40px;">
+        <p style="font:var(--p-lg);margin-bottom:16px;">Hi! I’m Olivia. I made this website because I love birds and I want other kids to love them too.</p>
+        <p style="font:var(--p-lg);margin-bottom:16px;">The San Francisco Bay Area is home to hundreds of birds — some live here all year, and others stop by on long journeys across the world. When you learn a bird’s name, its colors, and its call, something magical happens: you start noticing them everywhere. On a walk, in a park, even outside your window.</p>
+        <p style="font:var(--p-lg);margin-bottom:16px;">Birds need our help. Clean water, healthy plants, and safe places to nest all depend on the choices people make every day. My hope is that when you fall in love with these 25 birds, you’ll want to protect the world they live in.</p>
+        <p style="font:var(--p-lg);margin:0;">So go explore, take the quizzes, earn your badges — and next time you see a bird, say hello. 🐦</p>
+      </div>
+
+      <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;">
+        <div style="flex:0 0 200px;">
+          <div style="width:200px;height:200px;border-radius:24px;overflow:hidden;box-shadow:var(--shadow-sm);background:var(--snap-yellow);">
+            <image-slot id="olivia-portrait" shape="rect" placeholder="Drop Olivia’s photo"></image-slot>
+          </div>
+        </div>
+        <div style="flex:1 1 380px;min-width:300px;">
+          <h3 style="margin-bottom:12px;">Olivia Chen</h3>
+          <p style="font:var(--p-lg);margin-bottom:16px;">Olivia Chen is a 10-year-old 5th grader who goes to Pinewood School. She lives in Los Altos, CA with her younger sister, Izzy, her mother, father, and grandma.</p>
+          <p style="margin-bottom:16px;">Olivia has enjoyed writing since she was 5 years old. She published her first book, <em>Olivia’s Fantasy Wonderland</em>, at the age of 7 — a collection of fictional stories where her imagination meets the pages of the book.</p>
+          <p style="margin-bottom:20px;">Her hobbies are reading, writing, drawing, swimming, and playing cello. She also enjoys traveling with her family, and she loves looking for wildlife, especially birds. Through this website, Olivia hopes to inspire children around her age to care for birds and be aware of what they are doing to the environment.</p>
+          <div style="display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:12px 20px;box-shadow:var(--shadow-xs);">
+            <i data-lucide="mail" style="width:18px;height:18px;color:var(--fg-muted);"></i>
+            <a href="mailto:oyxchen@gmail.com" style="font:var(--p);font-weight:600;">oyxchen@gmail.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ CELEBRATION OVERLAY ============ -->
+  <sc-if value="{{ hasCelebrate }}" hint-placeholder-val="{{ false }}">
+    <div class="overlay-bg" onClick="{{ dismissCelebrate }}" style="position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;padding:24px;">
+      <div class="celebrate-card" style="background:#fff;border-radius:28px;padding:40px;max-width:420px;text-align:center;box-shadow:var(--shadow-lg);">
+        <div style="font-size:64px;line-height:1;">🎉</div>
+        <div class="eyebrow" style="margin-top:12px;">Badge unlocked</div>
+        <sc-for list="{{ celebrateBadges }}" as="c" hint-placeholder-count="1">
+          <div style="display:flex;align-items:center;gap:16px;justify-content:center;margin-top:16px;">
+            <div style="{{ c.circleStyle }}">{{ c.icon }}</div>
+            <div style="text-align:left;">
+              <div style="font:var(--h5);">{{ c.name }}</div>
+              <div style="font:var(--p-sm);color:var(--fg-muted);">{{ c.req }}</div>
+            </div>
+          </div>
+        </sc-for>
+        <div class="btn btn-dark" onClick="{{ dismissCelebrate }}" style="margin-top:28px;background:var(--snap-yellow);color:#000;font:var(--p);font-weight:700;padding:14px 32px;border-radius:999px;cursor:pointer;display:inline-block;">Woohoo!</div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:820},&quot;siteName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Bay Birds&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;showFunFacts&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { page:'birds', birdId:null, filter:'all', query:'', answers:{}, finished:false, playing:false, celebrate:null, version:0 };
+
+  // ---------- data ----------
+  get TINT() { return { water:'rgba(0,182,255,0.16)', raptor:'rgba(201,138,59,0.22)', song:'rgba(57,202,142,0.16)' }; }
+  get GL() { return { water:'Water & shore', raptor:'Raptor', song:'Songbird' }; }
+
+  BIRDS() {
+    if (this._birds) return this._birds;
+    const F = [
+      // name, sci, group, emoji, sizeClass, status, colorAnswer, colorsDetail, sizeDetail, statusDetail, fact, ffQ, ffOpts(|), ffA, habIdx
+      ["American Avocet","Recurvirostra americana","water","🦆","Medium","Common","Rusty-orange head with black-and-white wings","Bold black-and-white body with a cinnamon-orange head and neck in summer.","About 18 inches long, with very long, thin bluish legs.","A common sight on the South Bay’s salt ponds.","It sweeps its curved bill side-to-side through the water to catch tiny bugs.","How does the American Avocet find its food?","It sweeps its curved bill side-to-side through shallow water|It dives from the sky like a rocket|It digs deep holes in dry dirt|It steals food from other birds",0,0],
+      ["Green-Winged Teal","Anas crecca","water","🦆","Small","Common","Chestnut head with a bright green eye-patch","Males have a cinnamon head with a green swoosh; females are speckled brown.","North America’s smallest dabbling duck — about 14 inches.","A common winter visitor to Bay wetlands.","It is the smallest dabbling duck in North America.","What is special about the Green-Winged Teal’s size?","It is the smallest dabbling duck in North America|It is the largest duck in the world|It is taller than a person|It cannot fly at all",0,0],
+      ["Snowy Egret","Egretta thula","water","🕊️","Medium","Common","All white with black legs and bright yellow feet","Snowy-white feathers, slim black legs, and golden-yellow feet.","A slender heron about 24 inches tall.","Common in marshes and along the shoreline.","Its bright yellow feet are nicknamed its “golden slippers.”","What are the Snowy Egret’s yellow feet nicknamed?","Golden slippers|Rain boots|Duck shoes|Sun socks",0,0],
+      ["Great Blue Heron","Ardea herodias","water","🦢","Large","Common","Blue-gray body with a black eye stripe","Slate blue-gray with a white face and a black plume behind the eye.","Up to 4.5 feet tall with a 6-foot wingspan — the Bay’s tallest heron.","Common year-round all around the Bay.","It stands perfectly still, then stabs fish with a lightning-fast strike.","How does the Great Blue Heron catch fish?","It stands still, then strikes fast like a spear|It scoops them up with its feet|It catches them in a net of feathers|It waits for fish to jump into its mouth",0,0],
+      ["White-Faced Ibis","Plegadis chihi","water","🦩","Medium","Uncommon","Glossy maroon with green-bronze wings","Deep chestnut that shines green and purple in sunlight, with a white face edge in summer.","A medium wading bird with a long, down-curved bill.","An uncommon but growing visitor to Bay wetlands.","Its dark feathers shimmer green and purple when the sun hits them.","What happens to the White-Faced Ibis’s feathers in sunlight?","They shimmer green and purple|They turn pure white|They glow in the dark|They change to bright yellow",0,0],
+      ["American White Pelican","Pelecanus erythrorhynchos","water","🦢","Large","Uncommon","Bright white with black wingtips and an orange bill","A huge white body, black flight feathers, and a long orange bill with a throat pouch.","One of North America’s largest birds, with a 9-foot wingspan.","Seen in flocks on Bay lakes and ponds, mostly in winter.","Groups of pelicans herd fish together, then scoop them up as a team.","How do American White Pelicans catch fish?","They work as a team to herd fish, then scoop them up|Each one dives alone from high up|They fish only at night|They grab fish with their feet",0,0],
+      ["Sandhill Crane","Antigone canadensis","water","🦤","Large","Protected","Gray body with a bright red forehead","A tall gray bird with a red crown and a bushy “bustle” of feathers over the tail.","Nearly 4 feet tall with a wide wingspan.","Specially protected in California — a rare and special sight.","They dance — bowing and leaping into the air — to greet their mates.","Why do Sandhill Cranes leap and bow?","They dance to greet their mates|They are chasing after bugs|They are frightened of water|They are learning how to swim",0,0],
+      ["Common Murre","Uria aalge","water","🐧","Medium","Common","Black above and white below, like a tuxedo","A sleek black head and back with a crisp white belly — almost penguin-like.","About 17 inches, with a slim pointed bill.","Common on the ocean and rocky cliffs near the coast.","It “flies” underwater with its wings to chase fish deep below the surface.","How does the Common Murre swim after fish?","It flaps its wings to “fly” underwater|It uses its tail like a boat motor|It just floats and waits|It walks along the sea floor",0,3],
+      ["Cooper's Hawk","Accipiter cooperii","raptor","🦅","Medium","Common","Blue-gray back with a rusty barred chest","Steel-gray above, reddish bars below, with a long, banded tail.","About crow-sized, with short rounded wings.","Common — even in city parks and backyards.","It zips between trees and backyards to surprise smaller birds.","Where does the Cooper’s Hawk love to hunt?","Weaving between trees and backyards|Deep underwater|Only high above the clouds|Inside dark caves",0,1],
+      ["Peregrine Falcon","Falco peregrinus","raptor","🦅","Medium","Protected","Slate-gray back with a black “helmet”","A blue-gray back, pale barred chest, and a dark helmet-like head.","About crow-sized, with long pointed wings built for speed.","Protected, and an amazing comeback story around the Bay.","In a hunting dive it can top 240 mph — the fastest animal on Earth.","What record does the Peregrine Falcon hold?","Fastest animal on Earth in a dive|Loudest bird in the world|Biggest wingspan of any bird|Longest sleeper of all animals",0,1],
+      ["American Kestrel","Falco sparverius","raptor","🦅","Small","Common","Rusty back with blue-gray wings","A colorful little falcon: rusty back, blue-gray wings, and two black stripes on the face.","North America’s smallest falcon — about jay-sized.","Common on wires and fence posts near open fields.","It can hover in one spot in the air to spot bugs and mice below.","What can the tiny American Kestrel do while hunting?","Hover in one spot in the air|Swim under the mud|Dig long tunnels|Climb trees like a squirrel",0,1],
+      ["Great-Horned Owl","Bubo virginianus","raptor","🦉","Large","Common","Mottled brown with feather “ear” tufts","Camouflaged brown-and-gray with big yellow eyes and ear-like tufts.","A big, powerful owl up to 2 feet tall.","Common year-round, but hard to spot — it hunts at night.","Its “horns” are just tufts of feathers — not ears or real horns at all.","What are the Great-Horned Owl’s “horns”?","Tufts of feathers|Real horns|Its actual ears|Sticks it carries around",0,1],
+      ["Turkey Vulture","Cathartes aura","raptor","🦅","Large","Common","Dark brown-black with a bare red head","A big dark bird with a featherless red head and silvery linings under its wings.","Nearly 6-foot wingspan; soars for hours without flapping.","Very common — often seen circling high overhead.","It has an amazing sense of smell and helps clean up by eating dead animals.","How is the Turkey Vulture helpful to nature?","It cleans up by eating dead animals|It plants new trees|It builds nests for other birds|It scares away all the bugs",0,1],
+      ["Black Phoebe","Sayornis nigricans","song","🐦","Small","Common","Sooty black with a clean white belly","A crisp black head and chest with a bright white belly.","A small flycatcher, about 7 inches long.","Very common near water, gardens, and buildings.","It wags its tail up and down while perched, then darts out to catch bugs.","What does the Black Phoebe do while perched?","Wags its tail up and down|Spins around in circles|Claps its wings together|Hangs completely upside down",0,2],
+      ["Broad-Tailed Hummingbird","Selasphorus platycercus","song","🐦","Tiny","Uncommon","Shiny green back with a rose-pink throat","Glittering green above with a bright rose-magenta throat on males.","One of our tiniest birds — under 4 inches.","An uncommon summer visitor to gardens and foothills.","Its wings make a metallic trilling sound as the male flies.","What sound do the Broad-Tailed Hummingbird’s wings make?","A metallic trilling sound|A loud honk|A steady drumbeat|No sound at all",0,2],
+      ["Steller's Jay","Cyanocitta stelleri","song","🐦‍⬛","Medium","Common","Deep blue body with a charcoal-black head and crest","A black head and tall crest that fades into brilliant blue wings and tail.","About crow-sized, with a bold pointed crest.","Common in evergreen forests, campgrounds, and hills.","It can copy the scream of a hawk to trick and scare other birds.","What clever trick can the Steller’s Jay do?","Copy a hawk’s scream to trick other birds|Change its own color|Swim deep underwater|Glow brightly at night",0,2],
+      ["California Scrub-Jay","Aphelocoma californica","song","🐦","Medium","Common","Bright blue with a gray back and white throat","An azure-blue head, wings, and tail with a grayish back — and no crest.","About robin-to-crow sized, slim and long-tailed.","Very common in backyards, parks, and oak woodlands.","It hides thousands of acorns and remembers where most of them are buried.","What amazing memory skill does the California Scrub-Jay have?","It remembers where it hid thousands of acorns|It memorizes hundreds of songs|It can count all the way to a hundred|It never forgets a single face",0,2],
+      ["Loggerhead Shrike","Lanius ludovicianus","song","🐦","Small","Protected","Gray with a black robber’s mask and wings","A pale gray body, black wings and tail, and a bold black mask across the eyes.","About robin-sized, with a hooked bill.","A protected species that has become harder to find.","This songbird hunts like a raptor, earning the nickname “butcher bird.”","What is the Loggerhead Shrike nicknamed?","The butcher bird|The rainbow bird|The night singer|The tiny giant",0,2],
+      ["Western Meadowlark","Sturnella neglecta","song","🐤","Small","Common","Bright yellow chest with a black “V” collar","Sunny yellow underparts with a bold black V across the chest.","A chunky songbird about 9 inches long.","Common in open grasslands and fields.","Its flute-like song is one of the classic sounds of open grasslands.","What is the Western Meadowlark famous for?","Its beautiful flute-like song|Its amazing swimming|Building enormous nests|Its bright red feathers",0,2],
+      ["American Robin","Turdus migratorius","song","🐦","Small","Common","Gray back with a warm orange-red breast","Dark gray above with a rusty-orange belly and a cheerful yellow bill.","A familiar songbird about 10 inches long.","One of the most common backyard birds.","It tilts its head to listen and watch for worms moving in the grass.","How does the American Robin find worms?","It tilts its head to listen and look|It digs with its feet|It smells them underground|It waits only for rainy days",0,2],
+      ["Vermilion Flycatcher","Pyrocephalus rubinus","song","🐦","Tiny","Uncommon","Brilliant flame-red with brown wings","Males glow fiery red on the head and belly, with dark brown wings.","A tiny flycatcher, about 6 inches long.","A rare and exciting find in the Bay Area.","The bright red male flutters up into the air and sings to show off.","Why does the male Vermilion Flycatcher flutter and sing?","To show off for females|To scare away cats|To find its way home|To keep itself warm",0,2],
+      ["Western Bluebird","Sialia mexicana","song","🐦","Small","Common","Deep blue with a rusty-orange chest","A rich blue head and wings with a chestnut-orange breast.","A small thrush about 7 inches long.","Common in open woodlands, parks, and orchards.","It nests in tree holes and happily uses nest boxes people put up.","Where does the Western Bluebird like to nest?","In tree holes and nest boxes|On the open ground|Deep underwater|On top of power lines",0,2],
+      ["Acorn Woodpecker","Melanerpes formicivorus","song","🐦","Small","Common","Black-and-white with a red cap and a clown-like face","A black back, white belly, red crown, and a comical white-and-black face.","About 9 inches long, with a stout chisel bill.","Common wherever oak trees grow.","It stores thousands of acorns in holes it drills in a single “granary” tree.","What does the Acorn Woodpecker build in a tree?","A granary full of stored acorns|A swimming pool|A nest of soft leaves|A drum for playing music",0,2],
+      ["Yellow Warbler","Setophaga petechia","song","🐤","Tiny","Common","Bright golden-yellow all over","Sunny yellow, with faint reddish streaks on the male’s chest.","A tiny songbird about 5 inches long.","Common near streamside willows in spring and summer.","Its cheerful song sounds like “sweet-sweet-sweet-I’m-so-sweet.”","What does the Yellow Warbler’s song sound like?","“Sweet-sweet-sweet-I’m-so-sweet”|A loud, banging drum|A cat’s meow|A honking car horn",0,2],
+      ["White-Crowned Sparrow","Zonotrichia leucophrys","song","🐦","Small","Common","Gray with bold black-and-white head stripes","A plain gray body topped with a crown of bright black-and-white stripes.","A medium sparrow about 7 inches long.","Very common in winter across yards and parks.","Young birds learn their song’s local “accent” from the neighborhood they grow up in.","What do young White-Crowned Sparrows learn from their neighborhood?","Their song’s local “accent”|How to swim|Their exact migration map|The color of their feathers",0,2],
+    ];
+    const FEATURED = { "American Avocet":1, "Great Blue Heron":1, "Peregrine Falcon":1, "Steller's Jay":1 };
+    const ART = {
+      "American Avocet":[
+        "Down on the salt ponds of the South Bay, one shorebird really stands out — the American Avocet. In summer its head and neck turn a warm cinnamon color, while its body stays a sharp pattern of black and white. Long, thin, bluish legs carry it gracefully through the shallow water.",
+        "The avocet’s most famous feature is its bill. It curves gently upward, like a tiny sword bent the wrong way. The bird sweeps this bill side-to-side just under the surface, feeling for tiny bugs and shrimp to snap up.",
+        "Avocets like company. They often feed and rest in big groups, and they defend their nests together — dive-bombing and shouting at anything that comes too close, even much bigger animals.",
+        "Because the Bay’s salt ponds are being restored into healthy wetlands, avocets have plenty of space to feed and raise their chicks. When you visit, look for that up-curved bill sweeping the water — once you spot it, you’ll never forget it."
+      ],
+      "Great Blue Heron":[
+        "The Great Blue Heron is the tallest heron around the Bay, standing up to four and a half feet high. From a distance it looks like a slim, blue-gray statue waiting patiently at the water’s edge. A black stripe runs above each eye, ending in a thin plume at the back of the head.",
+        "Patience is this bird’s superpower. It can stand completely still for many minutes, watching the water. Then — faster than you can blink — its long neck snaps forward and its bill spears a fish. It swallows the fish whole, headfirst.",
+        "Great Blue Herons aren’t picky. They hunt fish, frogs, mice, and even small snakes, in both fresh and salt water. You might spot one at a pond, a creek, a marsh, or even a flooded field.",
+        "In spring, these herons gather to nest in the tops of tall trees, building big stick platforms called a rookery. Watching a heron take off — slow, huge wingbeats folding its neck into an S — is one of the great sights of the Bay."
+      ],
+      "Peregrine Falcon":[
+        "The Peregrine Falcon may be the most amazing athlete in the entire animal kingdom. When it folds its wings and dives after prey — a move called a “stoop” — it can reach speeds over 240 miles per hour. That makes it the fastest animal on Earth.",
+        "Peregrines are built for speed. They have a blue-gray back, a pale chest with fine bars, and a dark “helmet” of feathers on the head. Special bony bumps in their nostrils let them breathe even while diving at incredible speed.",
+        "Not long ago, Peregrine Falcons almost disappeared because of a harmful chemical called DDT that made their eggshells too thin. People banned the chemical and helped the falcons recover. Today they’re a protected success story.",
+        "Around the Bay, Peregrines sometimes nest on tall bridges and city buildings, which feel like cliffs to them. Look up near a bridge tower — you just might see the fastest hunter in the world."
+      ],
+      "Steller's Jay":[
+        "Bold, loud, and beautiful, the Steller’s Jay is impossible to miss in the Bay Area’s evergreen forests and hills. Its front half — head and tall crest — is charcoal black, and its back half explodes into a deep, brilliant blue.",
+        "Steller’s Jays are members of the crow family, which means they’re very smart. They’re also excellent copycats. A Steller’s Jay can imitate the scream of a Red-tailed Hawk to scare other birds away from food — a clever trick.",
+        "These jays love campgrounds and picnic areas, where they’ll happily swoop in to grab a dropped chip or cracker. They also store seeds and nuts for later, helping to plant new trees without even meaning to.",
+        "Listen for their harsh “shaack-shaack-shaack” call echoing through the trees. Once you learn it, you’ll know a Steller’s Jay is nearby long before you see that flash of blue."
+      ]
+    };
+    const groupWord = { water:"water bird", raptor:"bird of prey", song:"songbird" };
+    const sizeWord = { Tiny:"tiny", Small:"small", Medium:"medium-sized", Large:"large" };
+    const habSent = ["It feeds on mudflats, marshes, and the Bay’s salt ponds.","You’ll usually see it soaring in open sky or perched up high.","Look for it in oak woodlands, parks, and backyards.","It lives out on the open ocean and along rocky cliffs."];
+    const statSent = { Common:"It’s common here, so keep your eyes open — you’ll likely spot one.", Uncommon:"It’s a little uncommon, so seeing one is a lucky treat.", Protected:"It’s specially protected, which makes every sighting extra special." };
+    this._birds = F.map((r,i)=>{
+      const [name,sci,group,emoji,sizeClass,status,colorAnswer,colorsDetail,sizeDetail,statusDetail,fact,ffQ,ffOptsStr,ffA,habIdx]=r;
+      let article = ART[name];
+      if(!article){
+        article = [
+          `The ${name} is a ${sizeWord[sizeClass]} ${groupWord[group]} you can meet around the San Francisco Bay. ${colorsDetail} ${habSent[habIdx]}`,
+          `${fact} ${statSent[status]}`
+        ];
+      }
+      return { id:i, name, sci, group, emoji, sizeClass, status, colorAnswer, colorsDetail, sizeDetail, statusDetail, fact,
+        ff:{ q:ffQ, opts:ffOptsStr.split("|"), a:ffA }, habIdx, featured:!!FEATURED[name], article,
+        tint:this.TINT[group], groupLabel:this.GL[group] };
+    });
+    return this._birds;
+  }
+
+  // ---------- quiz building (deterministic) ----------
+  buildQuiz(bird){
+    const sizes = ["Tiny — smaller than a sparrow","Small — about robin-sized","Medium — about crow-sized","Large — goose-sized or bigger"];
+    const sizeIdx = { Tiny:0, Small:1, Medium:2, Large:3 };
+    const habs = ["On mudflats, marshes, and salt ponds","Soaring in open sky or perched up high","In oak woodlands, parks, and backyards","On the open ocean and rocky cliffs"];
+    const groupHab = { water:0, raptor:1, song:2 };
+    const habA = bird.habIdx != null ? bird.habIdx : groupHab[bird.group];
+    const colorPool = ["Bright cherry-red all over","Pure snowy white","Electric blue with a crest","Jet black and glossy","Warm brown with bold streaks","Sunny lemon-yellow","Soft gray with a pale belly","Green with a scarlet cap"];
+    const distractors = colorPool.filter(c=>c!==bird.colorAnswer).slice(0,3);
+    const cpos = bird.id % 4;
+    const colorOpts = distractors.slice();
+    colorOpts.splice(cpos, 0, bird.colorAnswer);
+    const q = [
+      { q:`Which best describes the ${bird.name}’s colors?`, opts:colorOpts, a:cpos },
+      { q:`About how big is the ${bird.name}?`, opts:sizes, a:sizeIdx[bird.sizeClass] },
+      { q:`Where are you most likely to spot the ${bird.name}?`, opts:habs, a:habA },
+      { q:bird.ff.q, opts:bird.ff.opts, a:bird.ff.a },
+    ];
+    if(bird.featured){
+      const st = { Common:0, Uncommon:1, Protected:2 };
+      q.push({ q:`How often do birders see the ${bird.name} around the Bay?`, opts:["Very common — easy to spot","Uncommon — a lucky find","Protected — rare and specially cared for"], a:st[bird.status] });
+    }
+    return q;
+  }
+
+  // ---------- results / localStorage ----------
+  KEY = "baybirds.results.v1";
+  getResults(){ try { return JSON.parse(localStorage.getItem(this.KEY)) || {}; } catch(e){ return {}; } }
+  setResults(r){ try { localStorage.setItem(this.KEY, JSON.stringify(r)); } catch(e){} }
+
+  badgeState(results){
+    const ids = Object.keys(results);
+    const taken = ids.filter(k=>results[k] && results[k].taken).length;
+    const points = ids.filter(k=>results[k] && results[k].perfect).length;
+    return { taken, points, grand: (taken===25 && points===25) };
+  }
+  unlockedSet(results){
+    const s = this.badgeState(results); const set = {};
+    [5,10,15,20,25].forEach(t=>{ if(s.taken>=t) set["p"+t]=1; });
+    [3,6,9,12,15,18,21,24].forEach(t=>{ if(s.points>=t) set["a"+t]=1; });
+    if(s.grand) set["grand"]=1;
+    return set;
+  }
+
+  // ---------- badge metadata ----------
+  partDefs(){ return [
+    { t:5, name:"Hatchling", icon:"🐣" }, { t:10, name:"Fledgling", icon:"🐥" },
+    { t:15, name:"Flyer", icon:"🕊️" }, { t:20, name:"Explorer", icon:"🔭" },
+    { t:25, name:"Bay Birder", icon:"🏅" },
+  ]; }
+  accDefs(){ return [
+    { t:3, name:"Bronze Beak", icon:"🥉", color:"#CD7F32" }, { t:6, name:"Silver Wing", icon:"🥈", color:"#9EA3AA" },
+    { t:9, name:"Gold Crest", icon:"🥇", color:"#E4B429" }, { t:12, name:"Ruby Plume", icon:"💎", color:"#F23C57" },
+    { t:15, name:"Sapphire Song", icon:"💎", color:"#00B6FF" }, { t:18, name:"Emerald Eye", icon:"💎", color:"#39CA8E" },
+    { t:21, name:"Amethyst Ace", icon:"💎", color:"#CC4AFB" }, { t:24, name:"Diamond Birder", icon:"💠", color:"#7ad3ff" },
+  ]; }
+  badgeById(id){
+    if(id==="grand") return { name:"Grandmaster of the Bay", icon:"👑", req:"All 25 birds, all perfect", circleStyle:this.circle(true,"#FFFC00") };
+    if(id[0]==="p"){ const d=this.partDefs().find(x=>"p"+x.t===id); return { name:d.name, icon:d.icon, req:`Take ${d.t} quizzes`, circleStyle:this.circle(true,"#FFFC00") }; }
+    const d=this.accDefs().find(x=>"a"+x.t===id); return { name:d.name, icon:d.icon, req:`${d.t} perfect birds`, circleStyle:this.circle(true,d.color) };
+  }
+  circle(unlocked,color){
+    const base="width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;flex:0 0 auto;margin:0 auto;";
+    if(unlocked) return base+`background:${color};box-shadow:var(--shadow-sm);`;
+    return base+"background:var(--neutral-100);filter:grayscale(1);opacity:0.55;";
+  }
+  badgeCard(unlocked){
+    const b="border-radius:18px;padding:20px 14px;display:flex;flex-direction:column;align-items:center;transition:transform var(--dur-base) var(--ease-out);";
+    return unlocked ? b+"background:#fff;box-shadow:var(--shadow-sm);" : b+"background:var(--neutral-50);border:1px dashed var(--border-strong);opacity:0.7;";
+  }
+
+  // ---------- navigation ----------
+  nav(page){ this.setState({ page, celebrate:null }); window.scrollTo(0,0); }
+  openBird(id){ this.setState({ page:"detail", birdId:id, answers:{}, finished:false, playing:false, celebrate:null }); window.scrollTo(0,0); }
+
+  selectAnswer(qi,oi){ if(this.state.answers[qi]!=null) return; this.setState(s=>({ answers:{...s.answers, [qi]:oi} })); }
+  finishQuiz(bird, quiz){
+    const score = quiz.filter((q,qi)=>this.state.answers[qi]===q.a).length;
+    const total = quiz.length; const perfect = score===total;
+    const results = this.getResults();
+    const before = this.unlockedSet(results);
+    const prev = results[bird.id] || {};
+    results[bird.id] = { taken:true, perfect: perfect || !!prev.perfect, best: Math.max(score, prev.best||0), total };
+    this.setResults(results);
+    const after = this.unlockedSet(results);
+    const newIds = Object.keys(after).filter(k=>!before[k]);
+    const celebrate = newIds.length ? newIds.map(id=>this.badgeById(id)) : null;
+    this._lastResult = { score, total, perfect };
+    this.setState({ finished:true, celebrate, version:this.state.version+1 });
+  }
+  retryQuiz(){ this.setState({ answers:{}, finished:false }); }
+  resetProgress(){ this.setResults({}); this.setState({ version:this.state.version+1 }); }
+
+  // ---------- render ----------
+  renderVals(){
+    const props = this.props || {};
+    const siteName = props.siteName || "Bay Birds";
+    const showFunFacts = props.showFunFacts !== false;
+    const all = this.BIRDS();
+    const page = this.state.page;
+    const results = this.getResults();
+
+    const navDef = [ ["Birds","birds"], ["Badges","badges"], ["About","about"] ];
+    const activePage = (page==="detail") ? "birds" : page;
+    const navItems = navDef.map(([label,pg])=>{
+      const active = activePage===pg;
+      return { label, style:`font:var(--p-sm);font-weight:600;padding:9px 18px;border-radius:999px;cursor:pointer;`+(active?"background:#000;color:#fff;":"color:var(--fg-muted);background:transparent;"), onClick:()=>this.nav(pg) };
+    });
+
+    // gallery
+    const filterDefs = [["all","All 25"],["water","Water & shore"],["raptor","Raptors"],["song","Songbirds"]];
+    const q = this.state.query.trim().toLowerCase();
+    const filters = filterDefs.map(([key,label])=>{
+      const active=this.state.filter===key;
+      return { label, style:`font:var(--p-sm);font-weight:600;padding:9px 18px;border-radius:999px;`+(active?"background:var(--snap-yellow);color:#000;":"background:#fff;color:var(--fg-muted);border:1px solid var(--border);"), onClick:()=>this.setState({filter:key}) };
+    });
+    const shown = all.filter(b=>(this.state.filter==="all"||b.group===this.state.filter)&&(!q||b.name.toLowerCase().includes(q))).map(b=>{
+      const r=results[b.id]||{};
+      const sc = b.status==="Common"?"var(--snap-green)":b.status==="Uncommon"?"var(--snap-blue)":"var(--snap-red)";
+      return { ...b, onOpen:()=>this.openBird(b.id),
+        statusPill:`font:var(--caption);font-weight:700;background:#fff;color:${sc};padding:3px 10px;border-radius:999px;box-shadow:var(--shadow-xs);`,
+        done: !!r.taken, doneLabel: r.perfect ? "★ Perfect" : "✓ Done" };
+    });
+
+    // detail
+    let d = null;
+    if(page==="detail" && this.state.birdId!=null){
+      const bird = all[this.state.birdId];
+      const quiz = this.buildQuiz(bird);
+      const sc = bird.status==="Common"?"var(--snap-green)":bird.status==="Uncommon"?"var(--snap-blue)":"var(--snap-red)";
+      const statusLabel = bird.status==="Common"?"Common":bird.status==="Uncommon"?"Uncommon":"Protected";
+      const answeredCount = quiz.filter((qq,qi)=>this.state.answers[qi]!=null).length;
+      const allAnswered = answeredCount===quiz.length;
+      const questions = quiz.map((qq,qi)=>{
+        const sel=this.state.answers[qi];
+        const opts=qq.opts.map((text,oi)=>{
+          let bg="#fff",bd="1px solid var(--border)",mark="";
+          if(sel!=null){
+            if(oi===qq.a){ bg="rgba(57,202,142,0.16)"; bd="1.5px solid var(--snap-green)"; mark="✓"; }
+            if(oi===sel && sel!==qq.a){ bg="rgba(242,60,87,0.12)"; bd="1.5px solid var(--snap-red)"; mark="✗"; }
+          }
+          return { text, mark, liveClass: sel==null?"qopt-live":"", style:`display:flex;align-items:center;justify-content:space-between;gap:12px;background:${bg};border:${bd};border-radius:14px;padding:14px 18px;font:var(--p);`+(sel==null?"":"cursor:default;"), onClick: sel==null?(()=>this.selectAnswer(qi,oi)):(()=>{}) };
+        });
+        return { q:qq.q, numLabel:`Q${qi+1}.`, opts };
+      });
+      let resultStyle="",resultTitle="",resultText="";
+      if(this.state.finished && this._lastResult){
+        const {score,total,perfect}=this._lastResult;
+        const rc = perfect?"rgba(57,202,142,0.12)":"var(--snap-pale-yellow)";
+        resultStyle=`margin-top:26px;background:${rc};border-radius:18px;padding:24px;`;
+        resultTitle= perfect?`Perfect! ${score}/${total} 🎉`:`You got ${score} of ${total}`;
+        resultText= perfect?"You earned an accuracy point for this bird. Amazing work!":"Nice try! Get every question right to earn an accuracy point — tap “Try again.”";
+      }
+      const playing=this.state.playing;
+      d = {
+        ...bird, statusLabel, intro: bird.article[0],
+        statusPillBig:`display:inline-flex;align-self:flex-start;font:var(--p-sm);font-weight:700;color:${sc};background:#fff;border:1.5px solid ${sc};padding:7px 16px;border-radius:999px;`,
+        colorTitle: bird.colorAnswer,
+        statusColor: sc,
+        statusIcon: bird.status==="Protected"?"shield":bird.status==="Uncommon"?"eye":"heart",
+        statusIconWrap:`width:42px;height:42px;border-radius:12px;background:${bird.status==="Common"?"rgba(57,202,142,0.14)":bird.status==="Uncommon"?"rgba(0,182,255,0.14)":"rgba(242,60,87,0.12)"};display:flex;align-items:center;justify-content:center;margin-bottom:12px;`,
+        mainPhotoId:`ph-${bird.id}-main`, mainPhotoPlaceholder:`Drop a photo of the ${bird.name}`,
+        galleryPhotos:[0,1,2].map(n=>({ id:`ph-${bird.id}-${n}`, placeholder:"Add a photo" })),
+        togglePlay:()=>this.setState(s=>({playing:!s.playing})),
+        playIcon: playing?"pause":"play", audioTime: playing?"0:04 / 0:12":"0:00 / 0:12",
+        audioProgress:`height:100%;background:var(--snap-yellow);border-radius:999px;width:${playing?100:0}%;transition:width ${playing?"12s linear":"0.3s var(--ease-out)"};`,
+        quiz:{ questions, progressText:`${answeredCount} of ${quiz.length} answered`, showFinish: allAnswered && !this.state.finished,
+          onFinish:()=>this.finishQuiz(bird,quiz), finished:this.state.finished, onRetry:()=>this.retryQuiz(),
+          resultStyle, resultTitle, resultText },
+      };
+    }
+
+    // badges
+    const bs=this.badgeState(results);
+    const unlocked=this.unlockedSet(results);
+    const participation=this.partDefs().map(x=>{ const u=!!unlocked["p"+x.t]; return { name:x.name, icon:u?x.icon:"🔒", req:`${x.t} quizzes`, cardStyle:this.badgeCard(u), circleStyle:this.circle(u,"#FFFC00") }; });
+    const accuracy=this.accDefs().map(x=>{ const u=!!unlocked["a"+x.t]; return { name:x.name, icon:u?x.icon:"🔒", req:`${x.t} perfect birds`, cardStyle:this.badgeCard(u), circleStyle:this.circle(u,x.color) }; });
+    const earnedCount=Object.keys(unlocked).length;
+    const grand=bs.grand;
+    const badges={ taken:bs.taken, points:bs.points, earnedCount, participation, accuracy,
+      grandStyle:`display:flex;align-items:center;gap:24px;border-radius:24px;padding:28px 32px;`+(grand?"background:var(--snap-yellow);":"background:#000;color:#fff;"),
+      grandFloat: grand?"float":"", grandEyebrow: grand?"rgba(0,0,0,0.55)":"var(--snap-yellow)",
+      grandTextColor: grand?"rgba(0,0,0,0.7)":"rgba(255,255,255,0.7)",
+      grandText: grand?"You did it! You know every bird of the Bay by heart. You are a true Grandmaster.":"Complete all 25 quizzes with a perfect score to unlock the top badge." };
+
+    const celebrateBadges = (this.state.celebrate||[]).map(c=>({ name:c.name, icon:c.icon, req:c.req, circleStyle:c.circleStyle }));
+
+    return {
+      siteName, showFunFacts, navItems,
+      goHome:()=>this.nav("birds"), goBadges:()=>this.nav("badges"),
+      isBirds: page==="birds", isDetail: page==="detail", isBadges: page==="badges", isAbout: page==="about",
+      query:this.state.query, onQuery:(e)=>this.setState({query:e.target.value}),
+      filters, shown, hasResults: shown.length>0, noResults: shown.length===0,
+      d, badges,
+      hasCelebrate: !!(this.state.celebrate && this.state.celebrate.length), celebrateBadges,
+      dismissCelebrate:()=>this.setState({celebrate:null}),
+      resetProgress:()=>this.resetProgress(),
+    };
+  }
+
+  componentDidMount(){ if(window.lucide) window.lucide.createIcons(); }
+  componentDidUpdate(){ if(window.lucide) window.lucide.createIcons(); }
+}
+</script>
+</body>
+</html>
