@@ -1,8 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BirdLearn | Discover Bay Area Birds</title>
+<meta name="description" content="Meet 25 birds of the San Francisco Bay Area. Explore bird stories, photos, calls, conservation facts, quizzes, and achievement badges.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#57b782">
+<meta name="application-name" content="BirdLearn">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BirdLearn">
+<meta property="og:title" content="BirdLearn | Discover Bay Area Birds">
+<meta property="og:description" content="Explore 25 Bay Area birds through stories, photos, calls, conservation facts, quizzes, and badges.">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BirdLearn | Discover Bay Area Birds">
+<meta name="twitter:description" content="Explore 25 Bay Area birds through stories, photos, calls, conservation facts, quizzes, and badges.">
 <script src="./support.js"></script>
 <script src="./analytics.js" defer></script>
 </head>
@@ -2844,8 +2857,30 @@ class Component extends DCLogic {
     };
   }
 
-  componentDidMount(){ if(window.lucide) window.lucide.createIcons(); }
-  componentDidUpdate(){ if(window.lucide) window.lucide.createIcons(); }
+  updateDocumentTitle(){
+    const page = this.state.page;
+    if(page==="detail" && this.state.birdId!=null){
+      const bird = this.BIRDS()[this.state.birdId];
+      document.title = bird
+        ? `${bird.name} | Bay Area Bird Guide | BirdLearn`
+        : "Bay Area Bird Guide | BirdLearn";
+      return;
+    }
+    const titles = {
+      birds:"BirdLearn | Discover Bay Area Birds",
+      badges:"Bird Quiz Badges & Progress | BirdLearn",
+      about:"About BirdLearn | Bay Area Bird Education"
+    };
+    document.title = titles[page] || "BirdLearn | Discover Bay Area Birds";
+  }
+  componentDidMount(){
+    this.updateDocumentTitle();
+    if(window.lucide) window.lucide.createIcons();
+  }
+  componentDidUpdate(){
+    this.updateDocumentTitle();
+    if(window.lucide) window.lucide.createIcons();
+  }
 }
 </script>
 </body>
