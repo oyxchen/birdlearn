@@ -7,7 +7,7 @@ function mountAnalytics() {
   container.id = "vercel-analytics";
   container.hidden = true;
   document.body.appendChild(container);
-  createRoot(container).render(<Analytics />);
+  createRoot(container).render(<Analytics mode="production" />);
 }
 
 if (document.readyState === "loading") {
