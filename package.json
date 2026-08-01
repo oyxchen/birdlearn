@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "esbuild analytics-entry.jsx --bundle --minify --format=iife --outfile=analytics.js"
+    "build": "node scripts/build.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
