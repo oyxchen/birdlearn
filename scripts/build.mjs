@@ -1,4 +1,4 @@
-import { cpSync, mkdirSync, rmSync } from "node:fs";
+import { cpSync, mkdirSync, readdirSync, rmSync } from "node:fs";
 import { resolve } from "node:path";
 import { build } from "esbuild";
 
@@ -9,6 +9,10 @@ rmSync(output, { recursive: true, force: true });
 mkdirSync(output, { recursive: true });
 
 for (const file of ["index.html", "support.js", "image-slot.js", "About.docx", "Bird Guide.dc.html"]) {
+  cpSync(resolve(root, file), resolve(output, file));
+}
+
+for (const file of readdirSync(root).filter((name) => /^google[a-z0-9]+\.html$/i.test(name))) {
   cpSync(resolve(root, file), resolve(output, file));
 }
 
