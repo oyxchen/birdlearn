@@ -16,6 +16,8 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BirdLearn | Discover Bay Area Birds">
 <meta name="twitter:description" content="Explore 25 Bay Area birds through stories, photos, calls, conservation facts, quizzes, and badges.">
+<link rel="canonical" href="/">
+<base href="/">
 <script src="./support.js"></script>
 <script src="./analytics.js" defer></script>
 </head>
@@ -2592,8 +2594,40 @@ class Component extends DCLogic {
   }
 
   // ---------- navigation ----------
-  nav(page){ this.setState({ page, celebrate:null }); window.scrollTo(0,0); }
-  openBird(id){ this.setState({ page:"detail", birdId:id, answers:{}, finished:false, playing:false, celebrate:null }); window.scrollTo(0,0); }
+  routeFor(page, birdId=null){
+    if(page==="detail" && birdId!=null){
+      const bird = this.BIRDS()[birdId];
+      return bird ? `/birds/${bird.slug}` : "/";
+    }
+    return { birds:"/", badges:"/badges", about:"/about" }[page] || "/";
+  }
+  stateForPath(pathname){
+    const path = (pathname || "/").replace(/\/+$/, "") || "/";
+    if(path==="/" || path==="/birds") return { page:"birds", birdId:null };
+    if(path==="/badges") return { page:"badges", birdId:null };
+    if(path==="/about") return { page:"about", birdId:null };
+    const match = path.match(/^\/birds\/([^/]+)$/);
+    if(match){
+      const slug = decodeURIComponent(match[1]).toLowerCase();
+      const bird = this.BIRDS().find(item=>item.slug===slug);
+      if(bird) return { page:"detail", birdId:bird.id };
+    }
+    return { page:"birds", birdId:null };
+  }
+  applyPath(pathname){
+    const route = this.stateForPath(pathname);
+    this.stopAudioClock();
+    this.setState({ ...route, answers:{}, finished:false, playing:false, celebrate:null, lightbox:null });
+    window.scrollTo(0,0);
+  }
+  navigate(page, birdId=null, replace=false){
+    const path = this.routeFor(page, birdId);
+    const method = replace ? "replaceState" : "pushState";
+    if(window.location.pathname!==path) window.history[method]({}, "", path);
+    this.applyPath(path);
+  }
+  nav(page){ this.navigate(page); }
+  openBird(id){ this.navigate("detail", id); }
   normalizeLightboxIndex(index, total){
     if(!total) return 0;
     return ((index % total) + total) % total;
@@ -2872,10 +2906,24 @@ class Component extends DCLogic {
       about:"About BirdLearn | Bay Area Bird Education"
     };
     document.title = titles[page] || "BirdLearn | Discover Bay Area Birds";
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if(canonical) canonical.href = `${window.location.origin}${this.routeFor(page, this.state.birdId)}`;
   }
   componentDidMount(){
+    this._onPopState = ()=>this.applyPath(window.location.pathname);
+    window.addEventListener("popstate", this._onPopState);
+    const initial = this.stateForPath(window.location.pathname);
+    const isKnownPath = window.location.pathname==="/" || window.location.pathname==="/birds" ||
+      window.location.pathname==="/badges" || window.location.pathname==="/about" ||
+      (initial.page==="detail" && initial.birdId!=null);
+    if(!isKnownPath) window.history.replaceState({}, "", "/");
+    this.setState({ ...initial });
     this.updateDocumentTitle();
     if(window.lucide) window.lucide.createIcons();
+  }
+  componentWillUnmount(){
+    if(this._onPopState) window.removeEventListener("popstate", this._onPopState);
+    this.stopAudioClock();
   }
   componentDidUpdate(){
     this.updateDocumentTitle();
