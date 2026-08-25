@@ -12,6 +12,12 @@ for (const file of ["index.html", "support.js", "image-slot.js", "About.docx", "
   cpSync(resolve(root, file), resolve(output, file));
 }
 
+// Emit physical HTML files for clean top-level routes. This keeps direct links
+// such as /survey working even when the host does not apply SPA rewrites.
+for (const route of ["badges", "survey", "about"]) {
+  cpSync(resolve(root, "index.html"), resolve(output, `${route}.html`));
+}
+
 for (const file of readdirSync(root).filter((name) => /^google[a-z0-9]+\.html$/i.test(name))) {
   cpSync(resolve(root, file), resolve(output, file));
 }
