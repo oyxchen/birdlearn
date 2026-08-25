@@ -437,13 +437,13 @@
   <sc-if value="{{ isSurvey }}" hint-placeholder-val="{{ false }}">
     <div class="survey-shell">
       <div class="survey-link-card">
-        <span>To submit on a google form,</span>
-        <a href="https://forms.gle/mhp2Ze1vY2g2W2m88" target="_blank" rel="noopener noreferrer">click this link.</a>
+        <span>Prefer to fill out the survey in a new tab?</span>
+        <a href="https://forms.gle/mhp2Ze1vY2g2W2m88" target="_blank" rel="noopener noreferrer">Open the Google Form.</a>
       </div>
       <div style="text-align:center;margin:0 auto 28px;max-width:680px;">
-        <div class="eyebrow">Help BirdLearn grow</div>
-        <h1 style="font:var(--h1);margin:8px 0 12px;">BirdLearn Survey</h1>
-        <p style="font:var(--p-lg);color:var(--fg-muted);margin:0;">Share your experience and help make BirdLearn even better.</p>
+        <div class="eyebrow">Share your ideas</div>
+        <h1 style="font:var(--h1);margin:8px 0 12px;">Help Plan Future Bird Workshops</h1>
+        <p style="font:var(--p-lg);color:var(--fg-muted);margin:0;">What would make a bird workshop exciting for you? Share your favorite topics and activities. Your ideas can help make future educational workshops possible, welcoming, and fun!</p>
       </div>
       <iframe class="survey-frame" src="https://forms.gle/mhp2Ze1vY2g2W2m88?embedded=true" title="BirdLearn survey" loading="lazy">Loading the BirdLearn survey…</iframe>
     </div>
@@ -2926,7 +2926,7 @@ class Component extends DCLogic {
     const titles = {
       birds:"BirdLearn | Discover Bay Area Birds",
       badges:"Bird Quiz Badges & Progress | BirdLearn",
-      survey:"BirdLearn Survey | Share Your Feedback",
+      survey:"Help Plan Bird Workshops | BirdLearn Survey",
       about:"About BirdLearn | Bay Area Bird Education"
     };
     document.title = titles[page] || "BirdLearn | Discover Bay Area Birds";
