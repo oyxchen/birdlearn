@@ -30,7 +30,7 @@ await build({
 
 const html = readFileSync(resolve(root, "index.html"), "utf8");
 const birdSlugs = [...html.matchAll(/"slug":\s*"([^"]+)"/g)].map((match) => match[1]);
-const paths = ["/", "/birds", "/badges", "/about", ...birdSlugs.map((slug) => `/birds/${slug}`)];
+const paths = ["/", "/birds", "/badges", "/survey", "/about", ...birdSlugs.map((slug) => `/birds/${slug}`)];
 const configuredSiteUrl =
   process.env.SITE_URL ||
   (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "") ||
